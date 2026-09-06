@@ -17,17 +17,16 @@ This log records durable project choices and prevents later work from quietly co
 | 2026-09-06 | Miami Beach is the first atlas territory; South Beach receives the first dense visual pass. | The full island preserves a durable outer canvas while South Beach provides a landmark-rich starting area. |
 | 2026-09-06 | The selected visual direction is **Unfurled Cartographer** (visual option 1). | One continuous map best preserves geographic orientation while allowing enchanted place sheets to unfold from the parchment. |
 | 2026-09-06 | The first visual prototype is desktop-first at 1440 × 1024. | A large canvas is best for judging landmark density, legibility, folds, and place-sheet behavior before responsive adaptation. |
+| 2026-09-06 | Atlas geometry uses real geography beneath original illustrated cartography. | Recognizable coastlines, streets, and landmarks preserve spatial memory while living ink supplies the product's distinct character. |
 
 ## Decisions awaiting approval
 
-1. First release: personal working atlas, public product alpha, or cinematic concept proof
-2. Primary platform: desktop, tablet, or balanced responsive web application
-3. Atlas geometry: geographic, schematic, or hybrid
-4. Palace view: floor plan, cutaway, diorama, or layered combination
-5. Persistence model for the personal alpha
-6. Initial recall scoring and scheduling model
-7. Scope of AI-generated mnemonic imagery
-8. Accessibility and reduced-motion expression of living ink
+1. Long-term primary platform beyond the desktop-first visual prototype
+2. Palace view: floor plan, cutaway, diorama, or layered combination
+3. Persistence model for the personal alpha
+4. Initial recall scoring and scheduling model
+5. Scope of AI-generated mnemonic imagery
+6. Final accessibility and reduced-motion expression of living ink
 
 ## How to add a decision
 
