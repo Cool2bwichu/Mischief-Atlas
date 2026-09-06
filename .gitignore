@@ -1,0 +1,42 @@
+# Dependencies and build output
+node_modules/
+dist/
+build/
+.next/
+.nuxt/
+.svelte-kit/
+coverage/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Databases and private user data
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+data/private/
+data/user/
+private/
+exports/
+backups/
+uploads/
+memory-exports/
+recall-history/
+
+# Generated personal media and caches
+generated/private/
+media/private/
+.cache/
+tmp/
+temp/
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
