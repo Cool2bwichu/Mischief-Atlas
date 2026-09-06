@@ -45,7 +45,8 @@ mischief-atlas/
 │   │       ├── compass.webp
 │   │       ├── quill.webp
 │   │       ├── footprint-left.webp
-│   │       └── footprint-right.webp
+│   │       ├── footprint-right.webp
+│   │       └── ink-bloom.webp
 │   └── reference/miami-beach-unfurled-cartographer.webp
 ├── src/
 │   ├── App.jsx
@@ -67,9 +68,13 @@ mischief-atlas/
 │       └── responsive.css
 ├── tests/
 │   ├── app-shell.test.jsx
+│   ├── assets.test.js
 │   ├── landmarks.test.js
+│   ├── living-ink.test.jsx
 │   ├── map-transform.test.js
+│   ├── map-viewport.test.jsx
 │   └── place-sheet.test.jsx
+├── comparison-miami-beach.png
 ├── design-qa.md
 └── implementation-miami-beach.png
 ```
@@ -209,6 +214,7 @@ Expected: PASS.
 - Create: `public/assets/marks/quill.webp`
 - Create: `public/assets/marks/footprint-left.webp`
 - Create: `public/assets/marks/footprint-right.webp`
+- Create: `public/assets/marks/ink-bloom.webp`
 - Create: `src/styles/tokens.css`
 - Test: `tests/assets.test.js`
 
@@ -235,6 +241,7 @@ const assets = [
   "public/assets/marks/quill.webp",
   "public/assets/marks/footprint-left.webp",
   "public/assets/marks/footprint-right.webp",
+  "public/assets/marks/ink-bloom.webp",
 ];
 
 describe("visual asset pack", () => {
@@ -298,6 +305,9 @@ diagonal composition, 256 × 256.
 footprint-left.webp and footprint-right.webp — one small human shoe print in
 deep oxblood ink, isolated on flat matching parchment with no other marks,
 128 × 128 each.
+
+ink-bloom.webp — irregular concentric oxblood selection bloom, hand-inked and
+isolated on flat matching parchment, no symbol or text, 256 × 256.
 
 miami-beach-ink-route.webp — a narrow irregular oxblood ink route following
 Ocean Drive from South Pointe northward, isolated on flat matching parchment,
@@ -415,7 +425,7 @@ describe("map transform", () => {
         { width: 1440, height: 1024 },
         { width: 1487, height: 1058 },
       ),
-    ).toEqual({ x: -767, y: 512 });
+    ).toEqual({ x: -767, y: 546 });
   });
 });
 ```
@@ -594,7 +604,7 @@ export function LandmarkHotspot({ landmark, selected, onSelect }) {
 }
 ```
 
-The hotspot has no modern pin. Its resting boundary is invisible; hover, focus, and selected states use an oxblood ink-ring asset or a restrained outline aligned to existing map artwork.
+The hotspot has no modern pin. Its resting boundary is invisible; hover, focus, and selected states reveal the generated `ink-bloom.webp` beneath the accessible button while focus also receives the required non-color outline.
 
 - [ ] **Step 5: Implement the map and artifact controls**
 
@@ -903,7 +913,7 @@ Expected: PASS.
 ### Task 7: Integrate, verify, and pass design QA
 
 **Files:**
-- Modify as findings require: `src/components/*.jsx`, `src/styles/*.css`
+- Modify when the visible comparison identifies a mismatch: `src/App.jsx`, `src/components/ArtifactControls.jsx`, `src/components/LandmarkHotspot.jsx`, `src/components/LivingInk.jsx`, `src/components/MapViewport.jsx`, `src/components/PlaceSheet.jsx`, `src/styles/map.css`, `src/styles/motion.css`, `src/styles/place-sheet.css`, `src/styles/responsive.css`, `src/styles/tokens.css`
 - Create: `implementation-miami-beach.png`
 - Create: `comparison-miami-beach.png`
 - Create: `design-qa.md`
@@ -986,7 +996,7 @@ Open `comparison-miami-beach.png` at original resolution. Use focused crops for 
 
 - [ ] **Step 6: Write the first design-QA report**
 
-Create `design-qa.md` with:
+Create `design-qa.md` from the visible full-view comparison and the three focused crops. Begin with these exact evidence fields:
 
 ```md
 # Design QA — Miami Beach Unfurled Cartographer
@@ -1003,24 +1013,9 @@ focused region evidence: map center, Ocean Drive route, and place sheet crops
 primary interactions tested: pan, reset, wheel zoom, button zoom, keyboard zoom,
 landmark focus and selection, rename, accordion, refold, reduced motion
 console errors checked: yes
-
-**Findings**
-
-List every visible mismatch as P0, P1, P2, or P3 with location, evidence,
-impact, and a concrete fix.
-
-**Comparison history**
-
-Record each P0/P1/P2, the exact change made, and the post-fix screenshot path.
-
-**Follow-up polish**
-
-List only non-blocking P3 refinements.
-
-final result: blocked
 ```
 
-Replace the instructional sentences with concrete findings from the visible comparison.
+Follow the evidence fields with `**Findings**`, `**Comparison history**`, and `**Follow-up polish**`. For every visible mismatch, record severity, location, evidence, impact, and the exact fix. If no mismatch exists at a severity, state that explicitly. The first report ends with `final result: blocked` whenever any P0, P1, or P2 exists; otherwise it ends with `final result: passed`.
 
 - [ ] **Step 7: Fix every P0, P1, and P2 and repeat comparison**
 
