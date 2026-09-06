@@ -13,6 +13,11 @@ This log records durable project choices and prevents later work from quietly co
 | 2026-09-06 | No application stack is selected before the experience direction. | Technology should serve the spatial interaction and privacy model rather than pre-empt them. |
 | 2026-09-06 | No open-source license is granted yet. | Public visibility does not automatically grant reuse rights. |
 
+| 2026-09-06 | The first release is a personal working atlas. | The product must prove genuine usefulness with meaningful lived material before it is generalized for strangers. |
+| 2026-09-06 | Miami Beach is the first atlas territory; South Beach receives the first dense visual pass. | The full island preserves a durable outer canvas while South Beach provides a landmark-rich starting area. |
+| 2026-09-06 | The selected visual direction is **Unfurled Cartographer** (visual option 1). | One continuous map best preserves geographic orientation while allowing enchanted place sheets to unfold from the parchment. |
+| 2026-09-06 | The first visual prototype is desktop-first at 1440 × 1024. | A large canvas is best for judging landmark density, legibility, folds, and place-sheet behavior before responsive adaptation. |
+
 ## Decisions awaiting approval
 
 1. First release: personal working atlas, public product alpha, or cinematic concept proof
