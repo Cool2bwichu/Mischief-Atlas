@@ -1,6 +1,6 @@
 # Miami Beach Map — Unfurled Cartographer Design
 
-**Status:** Selected visual direction; interaction contract ready for user review  
+**Status:** Approved for prototype implementation  
 **Date:** 2026-09-06  
 **Selected reference:** [Miami Beach — Unfurled Cartographer](../design/assets/miami-beach-unfurled-cartographer.webp)
 
