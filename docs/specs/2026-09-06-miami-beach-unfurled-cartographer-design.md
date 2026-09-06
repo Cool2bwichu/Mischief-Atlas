@@ -2,7 +2,7 @@
 
 **Status:** Selected visual direction; interaction contract ready for user review  
 **Date:** 2026-09-06  
-**Selected reference:** [Miami Beach — Unfurled Cartographer](assets/miami-beach-unfurled-cartographer.webp)
+**Selected reference:** [Miami Beach — Unfurled Cartographer](../design/assets/miami-beach-unfurled-cartographer.webp)
 
 ## Decision
 
