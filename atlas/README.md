@@ -1,0 +1,36 @@
+# Awakening City prototype
+
+Application root for Mischief Atlas. Run `npm ci` and `npm run dev` here.
+
+## Architecture
+
+- `src/App.jsx`: selected place, search, navigation, motion controls and browser-local persistence.
+- `src/map/InkMap.js`: Leaflet navigation with a canvas renderer for original vector-tile geometry. No WebGL dependency.
+- `src/map/AtlasMap.jsx`: geographically anchored illustrations and collision-aware place labels.
+- `src/map/TrafficInk.jsx`: discrete fading shoe stamps along mapped street polylines.
+- `src/PlaceSheet.jsx`: rename, unfolding interior, room creation and empty-room inspection.
+- `src/atlas-model.js`: input validation, storage recovery, route interpolation and traffic presets.
+
+## Geographic and visual sources
+
+`public/map/SOURCE.json` records the OpenFreeMap snapshot, bounds, retrieval date, and OpenStreetMap license. The 78 vector tiles cover Miami Beach and its immediate surroundings at source zooms 11–14; closer views redraw that source geometry. Missing features in OSM cannot be recovered by zooming. The UI contains 26 curated places; the bundled POI index is reference data, not a live business directory.
+
+`scripts/snapshot-map.mjs` refreshes the public map snapshot and reference indexes. Run it from this directory with network access. Keep the OSM/OpenFreeMap/OpenMapTiles attribution visible.
+
+All artwork in `public/assets/` was generated for this prototype. Landmark depictions and memory interiors are illustrative. Roads, buildings, coastlines and geographic positions use map data rather than generated geography.
+
+## Prototype boundaries
+
+Traffic presets are illustrative, never live. Footsteps are anonymous and do not track people. Names and rooms use localStorage under `mischief-atlas-v1`. No private data is sent to an API, but browser storage is not encrypted, synchronized, or backed up. Do not use this prototype as the only copy of valuable memories.
+
+Continuous motion honors the initial reduced-motion preference and has an always-available pause/resume button. Landmark emergence and place-sheet opening also stop animating when motion is paused.
+
+## Verification
+
+```sh
+npm test
+npm run build
+npm run test:sites
+```
+
+See `design-qa.md` for browser evidence and the selected visual comparison. The Sites runtime files are preserved for a future deployment; this build has not been deployed.

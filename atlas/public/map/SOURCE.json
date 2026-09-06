@@ -1,0 +1,23 @@
+{
+  "provider": "OpenFreeMap",
+  "source": "OpenStreetMap / OpenMapTiles",
+  "metadataUrl": "https://tiles.openfreemap.org/planet",
+  "tileTemplate": "https://tiles.openfreemap.org/planet/20260830_080001_pt/{z}/{x}/{y}.pbf",
+  "retrievedAt": "2026-09-06T18:44:18.069Z",
+  "bounds": [
+    -80.205,
+    25.746,
+    -80.105,
+    25.886
+  ],
+  "zooms": [
+    11,
+    12,
+    13,
+    14
+  ],
+  "tileCount": 78,
+  "bytes": 7165726,
+  "license": "OpenStreetMap data © contributors, ODbL 1.0",
+  "licenseUrl": "https://www.openstreetmap.org/copyright"
+}
