@@ -157,6 +157,7 @@ const compositions = [
 export function drawCoastalNature(ctx, coords, polygons) {
   if (coords.z < 14) return;
   for (const [kind, coordinates, size, angle, variant] of compositions) {
+    if (kind === "wave") continue;
     const world = mercator(coordinates, coords.z);
     const x = world[0] - coords.x * 256,
       y = world[1] - coords.y * 256;

@@ -76,8 +76,8 @@ input {
   overflow: hidden;
   isolation: isolate;
   background:
-    linear-gradient(#f0e1c247, #f0e1c247),
-    url("/assets/parchment.webp") center/cover;
+    linear-gradient(#f1e4cb14, #f1e4cb14),
+    url("/assets/parchment-worn.webp") center/cover;
 }
 .atlas-app:after {
   content: "";

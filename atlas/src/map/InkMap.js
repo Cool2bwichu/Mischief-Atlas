@@ -439,6 +439,57 @@ export class InkMap {
     const c = this.map.getCenter();
     return [c.lng, c.lat];
   }
+  // The decorative sea shares the same bundled water polygons as the map. This
+  // runs only for a settled camera; frame painting never decodes map geometry.
+  async getWaterScene() {
+    const zoom = this.map.getZoom();
+    const sourceZoom = Math.max(11, Math.min(14, Math.floor(zoom)));
+    const count = 2 ** sourceZoom,
+      bounds = this.map.getBounds();
+    const tilePoint = (lng, lat) => {
+      const sin = Math.sin((lat * Math.PI) / 180);
+      return [
+        ((lng + 180) / 360) * count,
+        (0.5 - Math.log((1 + sin) / (1 - sin)) / (4 * Math.PI)) * count,
+      ];
+    };
+    const nw = tilePoint(
+      Math.max(-80.205, bounds.getWest()),
+      Math.min(25.886, bounds.getNorth()),
+    );
+    const se = tilePoint(
+      Math.min(-80.105, bounds.getEast()),
+      Math.max(25.746, bounds.getSouth()),
+    );
+    const jobs = [];
+    for (let x = Math.floor(nw[0]); x <= Math.floor(se[0]); x++)
+      for (let y = Math.floor(nw[1]); y <= Math.floor(se[1]); y++)
+        jobs.push(
+          loadTile(sourceZoom, x, y).then(
+            (layers) =>
+              (layers.water || []).map((f) =>
+                f.geometry.map((ring) =>
+                  ring.map((p) => [
+                    (x + p.x / f.extent) / count,
+                    (y + p.y / f.extent) / count,
+                  ]),
+                ),
+              ),
+            () => [],
+          ),
+        );
+    const geometry = (await Promise.all(jobs)).flat();
+    return { geometry, zoom };
+  }
+  getPixelFrame() {
+    const origin = this.map.getPixelBounds().min;
+    return {
+      x: origin.x,
+      y: origin.y,
+      scale: 256 * 2 ** this.map.getZoom(),
+      zoom: this.map.getZoom(),
+    };
+  }
   project(c) {
     return this.map.latLngToContainerPoint([c[1], c[0]]);
   }
