@@ -1,0 +1,844 @@
+/* The opening is a title page; exploring keeps only a small margin inscription. */
+.opening-title {
+  display: grid;
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition:
+    grid-template-rows 420ms ease,
+    opacity 240ms ease;
+}
+.opening-title-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+.is-exploring .opening-title {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+}
+.masthead {
+  pointer-events: none;
+}
+.masthead > button,
+.masthead .search-wrap {
+  pointer-events: auto;
+}
+.masthead::before {
+  content: "";
+  position: absolute;
+  inset: -20px -15px;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse at 30% 30%,
+    #efdfbc 35%,
+    #efdfbce8 65%,
+    #efdfbc00 76%
+  );
+  pointer-events: none;
+}
+.compact-identity {
+  display: none;
+  text-align: left;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  min-height: 44px;
+}
+.compact-identity > span {
+  color: var(--red);
+  font-size: 23px;
+}
+.compact-identity small {
+  display: block;
+  font-size: 11px;
+  color: var(--ink);
+  letter-spacing: 1px;
+  margin-top: 1px;
+}
+.is-exploring .compact-identity {
+  display: flex;
+}
+.is-exploring .masthead {
+  width: 285px;
+  transform: none;
+  top: 22px;
+  left: 26px;
+}
+.is-exploring .masthead::before {
+  background: #efdfbcf5;
+  border-bottom: 1px solid #99734b44;
+  inset: -8px -12px -4px;
+}
+.is-exploring .search-wrap {
+  width: 100%;
+  margin-top: 2px;
+  padding: 6px 0;
+}
+.is-exploring .search-wrap input {
+  font-size: 20px;
+}
+.begin-exploring {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-style: italic;
+  min-height: 44px;
+  padding: 10px 0;
+}
+.is-exploring .island-inset {
+  width: 102px;
+  background: #efdfbcdf;
+}
+.is-exploring .inset-map {
+  height: 86px;
+}
+.is-exploring .inset-kicker {
+  display: none;
+}
+.landmark {
+  min-height: 44px;
+}
+.landmark.neighborhood {
+  width: 138px;
+  color: #654b35;
+}
+.landmark.neighborhood > span {
+  font-size: 11px;
+  text-transform: none;
+  letter-spacing: 0.1px;
+  background: #efdfbce0;
+  padding: 2px 5px;
+  max-width: 138px;
+}
+.landmark.neighborhood > svg {
+  width: 16px;
+  height: 16px;
+}
+.landmark.neighborhood .place-anchor {
+  opacity: 0.45;
+}
+.landmark.personal > img {
+  width: 106px;
+  height: 78px;
+}
+.landmark.personal.selected > img {
+  width: 134px;
+  height: 95px;
+}
+.landmark.personal > span {
+  text-transform: none;
+  font-size: 15px;
+  letter-spacing: 0;
+  font-family: Caveat, cursive;
+  color: var(--red);
+}
+.landmark.personal > small {
+  font-size: 9px;
+  font-style: italic;
+  background: #efdfbc;
+  padding: 1px 5px;
+}
+.map-tools {
+  flex-direction: row;
+  gap: 0;
+  right: 26px;
+  bottom: 101px;
+  padding: 4px;
+  background: #efdfbcf5;
+  border: 1px solid #8b6849;
+  box-shadow: 0 3px 10px #56382018;
+}
+.map-tools .compass-button {
+  padding: 0 7px;
+  min-height: 44px;
+  flex-direction: row;
+  position: relative;
+}
+.compass-button > span {
+  position: absolute;
+  font-size: 8px;
+  left: 22px;
+  top: -2px;
+}
+.zoom-buttons {
+  box-shadow: none;
+  border: 0;
+  background: none;
+  border-left: 1px solid #80603e55;
+  border-right: 1px solid #80603e55;
+  flex-direction: row;
+}
+.zoom-buttons > button {
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  justify-content: center;
+}
+.zoom-buttons > button + button {
+  border: 0;
+}
+.add-landmark-button {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 13px;
+  font-size: 15px;
+}
+.add-landmark-button[aria-pressed="true"] {
+  color: var(--paper);
+  background: var(--red);
+}
+.zoom-label {
+  position: absolute;
+  bottom: calc(100% + 9px);
+  right: 2px;
+  background: #efdfbce5;
+  padding: 0 5px;
+}
+.living-controls {
+  bottom: 48px;
+  right: 26px;
+}
+.living-controls::before {
+  font-size: 13px;
+  opacity: 1;
+}
+.living-controls > button {
+  min-height: 36px;
+  background: #efdfbcd9;
+}
+.atlas-footer {
+  opacity: 0.9;
+}
+.map-attribution {
+  background: #efdfbcd9;
+  padding: 2px 4px;
+}
+.is-exploring .place-sheet,
+.is-exploring .place-sheet.unfolded {
+  max-height: calc(100svh - 200px);
+}
+.is-exploring .place-sheet {
+  width: min(440px, 37vw);
+  bottom: 76px;
+}
+.is-exploring .sheet-picture {
+  height: 160px;
+}
+.is-exploring .place-sheet h2 {
+  font-size: 32px;
+}
+.place-provenance {
+  font-size: 11px;
+  line-height: 1.4;
+  margin: 12px 0 0;
+  color: #725237;
+}
+.place-provenance a {
+  text-underline-offset: 2px;
+}
+.landmark-tool {
+  position: absolute;
+  z-index: 10;
+  right: 26px;
+  bottom: 168px;
+  width: 340px;
+  max-height: calc(100svh - 194px);
+  overflow-y: auto;
+  padding: 20px;
+  background: #efdfbc;
+  border: 1px solid #8b6849;
+  box-shadow: 3px 6px 18px #56382026;
+  animation: paper-unfold 280ms ease both;
+  scrollbar-width: thin;
+}
+.tool-heading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.tool-heading h2 {
+  font-weight: 400;
+  color: var(--red);
+  font-size: 23px;
+  line-height: 1.1;
+  margin: 0;
+  flex: 1;
+}
+.tool-heading .icon-button {
+  min-width: 36px;
+  min-height: 36px;
+  margin: -4px -9px -4px 0;
+}
+.placement-hint {
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 12px 0;
+}
+.center-location {
+  border: 1px solid #8b6849;
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  align-items: center;
+  width: 100%;
+  min-height: 44px;
+}
+.keyboard-hint {
+  font-size: 12px;
+  line-height: 1.4;
+  margin-bottom: 0;
+}
+.landmark-tool form > label,
+.art-choices legend {
+  font-size: 14px;
+}
+.landmark-tool #landmark-name {
+  width: 100%;
+  padding: 12px 0 9px;
+  font-size: 18px;
+  border-bottom: 1px solid #8b6849;
+  margin: 0 0 17px;
+}
+.landmark-tool #landmark-name::placeholder {
+  font-size: 14px;
+  font-style: italic;
+  color: #806247;
+}
+.art-choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.art-choices legend {
+  padding: 0 0 8px;
+}
+.art-choices label {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #8b684966;
+  padding: 6px;
+  cursor: pointer;
+}
+.art-choices label.chosen {
+  border-color: var(--red);
+  background: #b27b3820;
+  box-shadow: inset 0 0 0 1px var(--red);
+}
+.art-choices input {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  accent-color: var(--red);
+  width: 13px;
+  height: 13px;
+  margin: 0;
+}
+.art-choices img {
+  width: 100%;
+  height: 69px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+.art-choices span {
+  font-size: 12px;
+  text-align: center;
+  padding: 3px 0;
+}
+.art-choices label:focus-within {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+.tool-caption {
+  font-size: 11px;
+  font-style: italic;
+  text-align: center;
+  margin: 10px 0 16px;
+}
+.tool-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.tool-actions button {
+  min-height: 44px;
+  padding: 8px 11px;
+}
+.tool-actions .save-landmark {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  background: var(--red);
+  color: var(--paper);
+}
+.landmark-tool small {
+  display: block;
+  margin-top: 12px;
+  font-size: 11px;
+}
+.placing-landmark .atlas-map {
+  cursor: crosshair;
+}
+.placing-landmark .landmark {
+  pointer-events: none;
+}
+.placement-crosshair,
+.draft-pin {
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+  color: var(--red);
+}
+.placement-crosshair {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #efdfbce8;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+}
+.draft-pin {
+  transform: translate(-50%, -100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.draft-pin span {
+  position: absolute;
+  top: calc(100% + 6px);
+  white-space: nowrap;
+  background: #efdfbc;
+  padding: 4px 8px;
+  font-size: 13px;
+  border: 1px solid #8b684977;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+@media (max-width: 1000px) and (min-width: 700px) {
+  .is-exploring .place-sheet {
+    width: 350px;
+  }
+  .map-tools {
+    right: 18px;
+  }
+  .add-landmark-button {
+    padding: 0 8px;
+    font-size: 13px;
+  }
+}
+@media (max-width: 699px) {
+  .is-exploring .masthead {
+    top: 15px;
+    left: 18px;
+    width: calc(100% - 115px);
+  }
+  .compact-identity > span {
+    font-size: 20px;
+  }
+  .is-exploring .island-inset {
+    top: 18px;
+    right: 12px;
+    width: 68px;
+    padding: 3px;
+  }
+  .is-exploring .inset-map {
+    height: 53px;
+  }
+  .is-exploring .search-results {
+    width: min(320px, calc(100vw - 32px));
+    max-height: 45svh;
+  }
+  .is-exploring .place-sheet,
+  .is-exploring .place-sheet.unfolded,
+  .place-sheet {
+    bottom: 149px;
+    width: calc(100% - 32px);
+    max-height: calc(100svh - 310px);
+  }
+  .is-exploring .place-sheet h2 {
+    font-size: 25px;
+  }
+  .is-exploring .sheet-picture {
+    height: 110px;
+  }
+  .place-provenance {
+    font-size: 10px;
+    margin-top: 8px;
+  }
+  .map-tools {
+    left: auto;
+    right: 16px;
+    bottom: 70px;
+    gap: 0;
+    padding: 3px;
+  }
+  .map-tools .compass-button {
+    display: flex;
+    padding: 0 5px;
+  }
+  .zoom-label {
+    display: none;
+  }
+  .add-landmark-button {
+    font-size: 14px;
+    padding: 0 9px;
+  }
+  .living-controls {
+    bottom: 28px;
+    left: 18px;
+    right: 18px;
+  }
+  .living-controls::before {
+    display: none;
+  }
+  .living-controls .ink-status > span {
+    max-width: 175px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .atlas-footer {
+    bottom: 7px;
+    left: 18px;
+    right: 18px;
+  }
+  .traffic-panel {
+    bottom: 97px;
+  }
+  .landmark-tool {
+    right: 16px;
+    bottom: 136px;
+    width: calc(100% - 32px);
+    max-height: calc(100svh - 268px);
+    padding: 15px;
+  }
+  .art-choices img {
+    height: 57px;
+  }
+  .landmark-tool .placement-hint {
+    font-size: 14px;
+    margin: 10px 0;
+  }
+  .landmark-tool #landmark-name {
+    margin-bottom: 12px;
+    padding: 9px 0;
+  }
+  .art-choices span {
+    font-size: 11px;
+  }
+  .tool-caption {
+    margin: 8px 0 10px;
+  }
+  .landmark.personal > img {
+    width: 88px;
+    height: 64px;
+  }
+}
+
+/* V1: one continuous sheet, with clear ink hierarchy and a single attention ribbon. */
+.inset-map {
+  mix-blend-mode: multiply;
+}
+.landmark > span {
+  font-size: 13px;
+  letter-spacing: 0.65px;
+}
+.landmark:not(.illustrated) > span {
+  font-size: 12px;
+}
+.landmark.neighborhood > span {
+  font-size: 12px;
+}
+.landmark.selected > span,
+.selection-ribbon {
+  position: relative;
+  font-family: "IM Fell English", serif;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0.2px;
+  line-height: 1.1;
+  max-width: 200px;
+  min-width: 115px;
+  padding: 6px 12px;
+  background: #f0e0be;
+  border-top: 1px solid #79533a;
+  border-bottom: 1px solid #79533a;
+  box-shadow: 0 2px 0 #79533a33;
+}
+.landmark.selected > span::before,
+.selection-ribbon::before,
+.landmark.selected > span::after,
+.selection-ribbon::after {
+  content: "";
+  position: absolute;
+  width: 13px;
+  height: 24px;
+  top: 5px;
+  background: repeating-linear-gradient(
+    120deg,
+    #79533a66 0 1px,
+    #dac097 1px 3px
+  );
+  border: 1px solid #79533a;
+  z-index: -1;
+}
+.landmark.selected > span::before,
+.selection-ribbon::before {
+  left: -10px;
+  transform: skewY(-14deg);
+  border-radius: 6px 0 0 9px;
+}
+.landmark.selected > span::after,
+.selection-ribbon::after {
+  right: -10px;
+  transform: skewY(14deg);
+  border-radius: 0 6px 9px 0;
+}
+.landmark > img {
+  animation-duration: 320ms;
+}
+.landmark.selected > img {
+  filter: sepia(0.12) saturate(0.8) contrast(1.1);
+}
+
+/* V2: content stays on a semantic plane while two noninteractive leaves refold. */
+.place-sheet {
+  animation: none;
+  perspective: 1000px;
+  transform: none;
+  transform-origin: left center;
+  transition:
+    visibility 0s,
+    opacity 80ms linear;
+}
+.place-sheet.sheet-closed {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    visibility 0s 320ms,
+    opacity 60ms linear 260ms;
+}
+.paper-leaves {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  perspective: 1000px;
+  z-index: 2;
+}
+.paper-leaf {
+  position: absolute;
+  top: 48px;
+  bottom: 14px;
+  width: calc(50% - 14px);
+  background:
+    linear-gradient(
+      90deg,
+      #68432322,
+      transparent 12%,
+      #fff1d31a 80%,
+      #68432322
+    ),
+    #ecd6af url("/assets/parchment.webp") center/200% auto;
+  border: 1px solid #8e68464d;
+  backface-visibility: hidden;
+  transform: rotateY(0deg);
+  transition: transform 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.leaf-cover {
+  left: 14px;
+  transform-origin: left center;
+  transition-delay: 60ms;
+}
+.leaf-inner {
+  right: 14px;
+  transform-origin: right center;
+}
+.sheet-open .leaf-cover {
+  transform: rotateY(-94deg);
+  transition-delay: 0ms;
+}
+.sheet-open .leaf-inner {
+  transform: rotateY(94deg);
+  transition-delay: 70ms;
+}
+.sheet-topline {
+  position: relative;
+  z-index: 3;
+}
+.place-sheet::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  top: 44px;
+  bottom: 14px;
+  left: 15px;
+  width: 2px;
+  background: linear-gradient(90deg, #68432355, #fff1d388);
+}
+.unfold-content {
+  position: relative;
+  animation: none;
+  perspective: 1000px;
+}
+.motion-off .paper-leaf {
+  transition: none;
+}
+.motion-off .place-sheet.sheet-closed {
+  transition: none;
+}
+@media (max-width: 699px) {
+  .landmark > span {
+    font-size: 12px;
+  }
+  .landmark.selected > span,
+  .selection-ribbon {
+    font-size: 17px;
+  }
+  .leaf-cover {
+    left: 14px;
+    right: 14px;
+    width: auto;
+    transform-origin: center top;
+  }
+  .leaf-inner {
+    display: none;
+  }
+  .sheet-open .leaf-cover {
+    transform: rotateX(94deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .paper-leaf,
+  .place-sheet.sheet-closed {
+    transition: none;
+  }
+}
+.landmark-tool {
+  animation: none;
+  transform-origin: center bottom;
+  transform: perspective(1000px) rotateX(0deg);
+  backface-visibility: hidden;
+  transition:
+    transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    visibility 0s;
+  border-bottom: 2px solid #79533a;
+}
+.landmark-tool.tool-closed {
+  transform: perspective(1000px) rotateX(-92deg);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 180ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    visibility 0s 180ms;
+}
+.motion-off .landmark-tool {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .landmark-tool {
+    transition: none;
+  }
+}
+.geographic-lettering {
+  position: absolute;
+  width: 260px;
+  height: 80px;
+  transform: translate(-50%, -50%);
+  fill: #79533a;
+  opacity: 0.8;
+  font:
+    italic 25px "IM Fell English",
+    serif;
+  letter-spacing: 2px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Ribbon sits above the blended drawing, with a true paper knockout. */
+.landmark.selected > span {
+  visibility: hidden;
+}
+.selection-ribbon {
+  position: absolute;
+  z-index: 4;
+  transform: translateX(-50%);
+  color: var(--red);
+  text-align: center;
+  pointer-events: none;
+}
+.ribbon-leader {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 1px;
+  background: #79533a88;
+  pointer-events: none;
+}
+
+.sheet-visual {
+  display: grid;
+  perspective: 1000px;
+}
+.sheet-visual > * {
+  grid-area: 1 / 1;
+}
+.sheet-visual .sheet-picture {
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  transform-origin: left center;
+  backface-visibility: hidden;
+  transform: rotateY(0deg);
+  transition: transform 380ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.unfolded .sheet-visual .sheet-picture {
+  transform: rotateY(-94deg);
+  pointer-events: none;
+}
+.unfold-content[hidden] {
+  display: none;
+}
+.motion-off .sheet-visual .sheet-picture {
+  transition: none;
+}
+@media (max-width: 699px) {
+  .sheet-visual .sheet-picture {
+    transform-origin: center top;
+    transform: rotateX(0deg);
+  }
+  .unfolded .sheet-visual .sheet-picture {
+    transform: rotateX(94deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sheet-visual .sheet-picture {
+    transition: none;
+  }
+}
+.sheet-visual {
+  mix-blend-mode: multiply;
+}

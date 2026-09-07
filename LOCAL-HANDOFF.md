@@ -1,6 +1,6 @@
 # Mischief Atlas — local development handoff
 
-Prepared September 7, 2026. This is the entry point for continuing the existing project on Mick's computer.
+Updated September 7, 2026. This is the entry point for continuing the existing project on Mick's computer. Read [the shared project guide](docs/THINGS-TO-WORK-ON.md) for the current milestone and release evidence.
 
 ## Immediate task
 
@@ -13,9 +13,9 @@ The cloud chat could prepare this repository but could not create a chat in the 
 - Canonical repository: https://github.com/Cool2bwichu/Mischief-Atlas
 - App directory: `atlas/`.
 - Starting main revision before this handoff: `d586cbaee10eade35d240bad1d7415be1e1a3d79`. Prototype PR #1 is merged.
-- A private ChatGPT Site was successfully published in the previous session. Its existing project ID is recorded in `atlas/.openai/hosting.json`; reuse it for any future requested Sites deployment. Do not create another Site.
+- A ChatGPT Site was successfully published in the previous session and is now public at https://mischief-atlas.cool2bwichu1992.chatgpt.site. Its existing project ID is recorded in `atlas/.openai/hosting.json`; reuse it for any future requested Sites deployment. Do not create another Site.
 - GitHub Pages workflow is committed in `.github/workflows/pages.yml`. At the last check, Pages needed the owner to enable Settings → Pages → Source: GitHub Actions. Check current status before claiming it is live.
-- This handoff requests local development. It does not request a new deployment or audience change.
+- Mick approved the map/toolkit refinement and requested merging and updating the published versions on September 7. Preserve the current audience and existing browser data.
 
 ## Start locally
 
@@ -37,7 +37,7 @@ npm run test:sites
 npm run build
 ```
 
-The previous implementation passed five model tests, four hosting tests, the production build, and desktop/mobile interaction checks. These are historical results; rerun relevant checks after changes. The production build also prepares the existing Sites Worker output.
+The September 7 refinement passed eight model tests, four hosting tests, production builds, and desktop/mobile interaction checks. These are dated results; rerun relevant checks after changes. The production build also prepares the existing Sites Worker output.
 
 ## Product and visual direction
 
@@ -51,11 +51,11 @@ Use real Miami Beach geography, opening on South Beach with whole-island navigat
 
 - React/Vite application with Leaflet navigation and a custom canvas map renderer.
 - Bundled OSM/OpenFreeMap snapshot: streets, buildings, coastline, 78 source vector tiles at zooms 11–14. Closer zoom redraws that data; it cannot add missing detail.
-- 26 curated searchable landmarks, six individual landmark illustrations, parchment and place-sheet artwork.
+- 26 curated anchors plus 792 additional searchable snapshot places, six original landmark illustrations, and four personal-landmark drawing choices.
 - Ink emergence and street-following fading footprints that reveal at closer zoom.
 - Place cards, landmark aliases, unfolding interiors, and user-created named rooms.
 - Pause/resume motion and reduced-motion handling.
-- Aliases and rooms persist in localStorage under `mischief-atlas-v1`.
+- Personal landmarks, aliases and rooms persist in localStorage under `mischief-atlas-v1`.
 
 Traffic is simulated, not live; footprint speed and density respond to illustrative traffic presets. Live traffic and weather are future ideas. Memory entries, recall training/scheduling, cloud synchronization, accounts, and backup/export are not implemented.
 
