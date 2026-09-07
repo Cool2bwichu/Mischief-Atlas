@@ -29,3 +29,5 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Folding uses reversible CSS hinges on existing surfaces with stable semantic controls, inert closed panels, static paused/reduced-motion states and one horizontal mobile hinge. Preserve the established memory-room prototype without treating it as the future cutaway implementation.
 
 - September 7 release approval: Mick approved the local map/toolkit refinement and explicitly requested merging and updating everything. Merge this milestone and update its existing published editions with their current audience; this does not authorize implementing every backlog feature.
+
+- September 7 review hold: Mick requested finishing the current V3/V4 local parchment/ink prototype, then pausing further development for his review. The prototype is ready locally on `codex/ink-apparition`; do not extend, merge or publish it until he provides further direction. See the shared guide for evidence and limits.

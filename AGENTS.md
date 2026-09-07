@@ -12,8 +12,10 @@ The guide is a backlog and continuity record, not authorization to implement eve
 
 Keep personal memories, private media, and credentials out of these project documents and the public repository.
 
-Latest visual feedback, September 7: the map must retain a strong Marauder's Map-inspired visual fingerprint after removing the obscuring overlay. Prioritize V1 in the shared guide and read `docs/design/2026-09-07-visual-fingerprint.md`. The user's two new references guide ink, lettering, architecture, material and motion across the entire map. Preserve recognizable real Miami Beach geometry and fluid interaction; do not restore the muddy overlay.
+Visual direction, September 7: the map must retain a strong Marauder's Map-inspired visual fingerprint after removing the obscuring overlay. V1/V2 established the first implemented visual/folding pass; the user's next priorities are V3 stronger parchment/water/nature and V4 ink dissolving/materializing, now under Visual Director research. Read the shared guide and applicable briefs under `docs/design/`. The user's supplied images and https://www.youtube.com/watch?v=HmGrtROhey0 guide ink, lettering, architecture, material and motion across the map. Preserve recognizable real Miami Beach geometry and fluid interaction; do not restore the muddy overlay.
 
 ## Preferred tools — September 7, 2026
 
 Mick requests using Forme, image generation, browser verification, and Product Design for tasks where they help. Use Forme for focused visual research and durable design rationale; image generation for cohesive artwork; browser tools for actual interaction and responsive verification; Product Design for experience exploration, visual ideation, and flow critique. Read the applicable skill when applying it. Select tools proportionally to the task rather than running every workflow on every change. Figma and Cloudflare remain optional future considerations, not required additions.
+
+- September 7 review hold: Mick requested finishing the current V3/V4 local parchment/ink prototype, then pausing further development for his review. The prototype is ready locally on `codex/ink-apparition`; do not extend, merge or publish it until he provides further direction. See the shared guide for evidence and limits.

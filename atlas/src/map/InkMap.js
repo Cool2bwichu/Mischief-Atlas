@@ -3,6 +3,7 @@ import { VectorTile } from "@mapbox/vector-tile";
 import { PbfReader } from "pbf";
 import "leaflet/dist/leaflet.css";
 import { publicUrl } from "../public-url.js";
+import { drawCoastalNature, hasCoastalNature } from "./nature-ink.js";
 
 // Render the original OSM vector geometry on canvas. No GPU or remote map service is required.
 const tileCache = new Map();
@@ -202,6 +203,34 @@ const InkTiles = L.GridLayer.extend({
           0.5,
           (f) => f.properties.class === "sand",
         );
+        if (hasCoastalNature(coords)) {
+          const polygons = { wave: [], sand: [], palm: [] };
+          for (const f of [
+            ...(layers.water || []),
+            ...(layers.landcover || []),
+          ]) {
+            const kind = layers.water?.includes(f)
+              ? "wave"
+              : f.properties.class === "sand"
+                ? "sand"
+                : ["wood", "grass"].includes(f.properties.class)
+                  ? "palm"
+                  : null;
+            if (!kind || f.type !== 3) continue;
+            const outline = new Path2D();
+            for (const ring of f.geometry) {
+              ring.forEach((p, i) => {
+                const x = ((p.x / f.extent) * 256 - offsetX) * factor;
+                const y = ((p.y / f.extent) * 256 - offsetY) * factor;
+                if (i === 0) outline.moveTo(x, y);
+                else outline.lineTo(x, y);
+              });
+              outline.closePath();
+            }
+            polygons[kind].push(outline);
+          }
+          drawCoastalNature(ctx, coords, polygons);
+        }
         const buildingScale =
           coords.z < 14 ? "distant" : coords.z < 16 ? "near" : "detail";
         for (const f of layers.building || []) {

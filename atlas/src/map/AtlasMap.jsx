@@ -18,6 +18,7 @@ import {
 } from "@phosphor-icons/react";
 import { illustrationPath } from "../data/personal-art.js";
 import TrafficInk from "./TrafficInk.jsx";
+import InkApparition from "./InkApparition.jsx";
 import { publicUrl } from "../public-url.js";
 const icons = {
   Park: Tree,
@@ -73,6 +74,7 @@ export default function AtlasMap({
   onExplore,
   placement,
   onPlace,
+  inkEvent,
 }) {
   const container = useRef(null),
     [map, setMap] = useState(null),
@@ -100,13 +102,16 @@ export default function AtlasMap({
       tools &&
       rect.right > tools.left - 10 &&
       rect.left < tools.right + 10 &&
-      rect.bottom > tools.top - 10 &&
+      rect.bottom + 70 > tools.top - 10 &&
       rect.top < tools.bottom + 10;
-    const top = overlapsTools ? tools.top - rect.height - 16 : rect.top;
+    const top = overlapsTools ? tools.top - rect.height - 72 : rect.top;
     setRibbon({
+      id: place.id,
+      kind: place.kind,
       coordinates: place.coordinates,
       name: aliases[place.id] || place.name,
       width: rect.width,
+      height: rect.height,
       x: rect.left - root.left + rect.width / 2 - point.x,
       y: top - root.top - point.y,
       leader: rect.top - top,
@@ -271,7 +276,7 @@ export default function AtlasMap({
         x: x - Math.max(labelWidth, illustrated ? 130 : 0) / 2,
         y: y - (illustrated ? 94 : 46),
         w: Math.max(labelWidth, illustrated ? 130 : 0),
-        h: illustrated ? 125 : 64,
+        h: (illustrated ? 125 : 64) + (p.id === selected ? 65 : 0),
       };
       if (
         p.id !== selected &&
@@ -375,6 +380,14 @@ export default function AtlasMap({
           );
         })}
       </div>
+      <InkApparition
+        map={map}
+        markers={markers}
+        anchor={ribbon?.id === selected ? ribbon : null}
+        selected={selected}
+        event={inkEvent}
+        motion={motion}
+      />
       {ribbon && selected && (
         <span
           className="selection-ribbon"

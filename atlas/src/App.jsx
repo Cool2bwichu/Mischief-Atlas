@@ -48,7 +48,12 @@ export function App() {
     [saveError, setSaveError] = useState(false),
     [exploring, setExploring] = useState(false),
     [placement, setPlacement] = useState(null),
-    [announcement, setAnnouncement] = useState("");
+    [announcement, setAnnouncement] = useState(""),
+    [inkEvent, setInkEvent] = useState(null);
+  const inkSequence = useRef(0);
+  function revealInk(placeId, action = "select") {
+    setInkEvent({ placeId, action, sequence: ++inkSequence.current });
+  }
   const addButton = useRef(null),
     previousPlace = useRef(null),
     lastSelection = useRef("ocean-drive"),
@@ -135,6 +140,7 @@ export function App() {
     setSaved(next);
     setPlacement(null);
     setSelected(p.id);
+    revealInk(p.id, "create");
     setAnnouncement(`${p.name} added to your atlas and saved in this browser.`);
     map.current?.flyTo({
       center: p.coordinates,
@@ -172,6 +178,7 @@ export function App() {
     selectionTrigger.current = document.activeElement;
     setExploring(true);
     setSelected(id);
+    revealInk(id);
     setSearchOpen(false);
     if (fly && map.current) {
       const p = placeById[id];
@@ -241,6 +248,7 @@ export function App() {
         onExplore={explore}
         placement={placement}
         onPlace={placePin}
+        inkEvent={inkEvent}
       />
       <header className="masthead">
         <button

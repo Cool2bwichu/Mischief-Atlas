@@ -41,3 +41,7 @@ Thumbs.db
 .idea/
 .vscode/
 .worktrees/
+
+# Local browser verification artifacts (isolated QA data)
+/.playwright-cli/
+/output/playwright/
