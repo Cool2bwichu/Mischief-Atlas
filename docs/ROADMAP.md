@@ -2,6 +2,12 @@
 
 The roadmap is organized around proof, not feature volume. Each phase has an exit condition.
 
+## Current milestone — Awakening City
+
+The approved Miami Beach aesthetic prototype is implemented in `atlas/`: real streets and buildings, 26 curated landmarks, six landmark illustrations, pan/zoom, search, place sheets, browser-local renaming and rooms, simulated street footprints, and pause/resume. The desktop and phone core interactions have been checked in the browser.
+
+Next: inspect and refine the working map, then design how a room holds actual memories. The complete recall loop below remains future work.
+
 ## Phase 0 — Product lock
 
 **Goal:** Resolve the decisions that materially alter the experience.

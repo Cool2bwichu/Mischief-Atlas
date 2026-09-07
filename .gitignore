@@ -40,3 +40,4 @@ temp/
 Thumbs.db
 .idea/
 .vscode/
+.worktrees/

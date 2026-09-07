@@ -10,7 +10,26 @@ The north star is simple:
 
 ## Status
 
-Mischief Atlas is in product-definition and experience-design. The repository deliberately contains no application stack yet; visual direction and the core interaction model will be selected before implementation begins.
+The **Awakening City** visual prototype is implemented in [`atlas/`](atlas/). It opens on South Beach with real map geometry, illustrated landmarks, living ink, and unfolding place sheets.
+
+- Pan and zoom across Miami Beach; search 26 curated landmarks.
+- Rename places and create nested memory rooms, saved in the current browser.
+- Watch anonymous footsteps emerge on actual streets; change the simulated traffic rhythm or pause motion.
+- Explore on desktop or phone. Generated artwork supplies the parchment and landmark drawings; OpenStreetMap supplies the geography.
+
+This is an aesthetic and interaction prototype. Recall practice, memory entries, accounts, synchronization, and live traffic are future work. See the [approved design](docs/specs/2026-09-06-awakening-city.md) and [verification report](atlas/design-qa.md).
+
+## Run the prototype
+
+Requires Node.js 22 or newer.
+
+```sh
+cd atlas
+npm ci
+npm run dev
+```
+
+`npm test` checks the state and motion model. `npm run build` produces the application; `npm run test:sites` checks the preserved hosting adapter. The geographic snapshot and fonts are bundled, so no map API key is required.
 
 ## The core loop
 
@@ -20,7 +39,7 @@ Every major feature must improve one of those five moments. If it does not help 
 
 ## First proof
 
-The strongest first version is one deeply polished, functional palace:
+The current milestone proves the Miami Beach map's aesthetics and spatial interactions. The later recall milestone remains one deeply polished, functional palace:
 
 - One familiar house
 - Three rooms

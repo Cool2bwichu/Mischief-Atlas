@@ -1,6 +1,6 @@
 # Miami Beach Map — Unfurled Cartographer Design
 
-**Status:** Approved for prototype implementation  
+**Status:** Superseded by `2026-09-06-awakening-city.md` after the user's fresh-start design selection.
 **Date:** 2026-09-06  
 **Selected reference:** [Miami Beach — Unfurled Cartographer](../design/assets/miami-beach-unfurled-cartographer.webp)
 

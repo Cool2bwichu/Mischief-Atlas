@@ -15,11 +15,22 @@ This log records durable project choices and prevents later work from quietly co
 
 | 2026-09-06 | The first release is a personal working atlas. | The product must prove genuine usefulness with meaningful lived material before it is generalized for strangers. |
 | 2026-09-06 | Miami Beach is the first atlas territory; South Beach receives the first dense visual pass. | The full island preserves a durable outer canvas while South Beach provides a landmark-rich starting area. |
-| 2026-09-06 | The selected visual direction is **Unfurled Cartographer** (visual option 1). | One continuous map best preserves geographic orientation while allowing enchanted place sheets to unfold from the parchment. |
+| 2026-09-06 | Superseded: **Unfurled Cartographer** (visual option 1). | Replaced by the user's later selection of the last revised image, Awakening City. |
 | 2026-09-06 | The first visual prototype is desktop-first at 1440 × 1024. | A large canvas is best for judging landmark density, legibility, folds, and place-sheet behavior before responsive adaptation. |
 | 2026-09-06 | Atlas geometry uses real geography beneath original illustrated cartography. | Recognizable coastlines, streets, and landmarks preserve spatial memory while living ink supplies the product's distinct character. |
 
 ## Decisions awaiting approval
+
+### Implementation decisions, 2026-09-06
+
+- **Awakening City** is the selected visual truth. The original concept remains preserved; obsolete prototype direction is superseded.
+- The immediate scope is the aesthetics and interactions of Miami Beach, before the complete recall loop.
+- React, Vite, Leaflet, and an actual OSM vector snapshot implement the prototype. Canvas rendering supports browsers without WebGL.
+- Six generated landmark illustrations sit over real geographic geometry; 26 curated places are searchable and selectable.
+- Browser storage holds aliases and named rooms for this prototype. It is not a backup or synchronization system.
+- Traffic is explicitly simulated. Congestion increases density and reduces speed; pause and reduced-motion states stop continuous animation.
+
+### Future product decisions
 
 1. Long-term primary platform beyond the desktop-first visual prototype
 2. Palace view: floor plan, cutaway, diorama, or layered combination
