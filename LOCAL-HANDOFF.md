@@ -14,7 +14,7 @@ The cloud chat could prepare this repository but could not create a chat in the 
 - App directory: `atlas/`.
 - Starting main revision before this handoff: `d586cbaee10eade35d240bad1d7415be1e1a3d79`. Prototype PR #1 is merged.
 - A ChatGPT Site was successfully published in the previous session and is now public at https://mischief-atlas.cool2bwichu1992.chatgpt.site. Its existing project ID is recorded in `atlas/.openai/hosting.json`; reuse it for any future requested Sites deployment. Do not create another Site.
-- GitHub Pages workflow is committed in `.github/workflows/pages.yml`. At the last check, Pages needed the owner to enable Settings → Pages → Source: GitHub Actions. Check current status before claiming it is live.
+- GitHub Pages is enabled through `.github/workflows/pages.yml` and live at https://cool2bwichu.github.io/Mischief-Atlas/. Release run 34086826322 succeeded on September 7. The existing ChatGPT Site was also refreshed to version 2. Check the shared guide for release evidence and V3’s next visual direction.
 - Mick approved the map/toolkit refinement and requested merging and updating the published versions on September 7. Preserve the current audience and existing browser data.
 
 ## Start locally

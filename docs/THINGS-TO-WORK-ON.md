@@ -16,7 +16,7 @@ Mischief Atlas is a personal memory palace built around familiar places. Its pur
 
 Mick loves the current first pass and wants to develop its identity, not replace it. Preserve Awakening City's parchment, walnut and oxblood ink, serif lettering, restrained handwriting, illustrated Miami landmarks, and sense of enchantment. Real geographic geometry remains the foundation.
 
-**Current work:** the map refinement and personal-landmark toolkit are implemented locally; Mick approved the result; release synchronization is underway. This is owned in the local task **Mischief Maintained**, task ID `01a07a0f-8b1c-7c40-b4b3-128561e7af5e`.
+**Current work:** the map/toolkit refinement is merged and published. Mick approved this release; the next visual refinement is V3 below. Implementation was completed in the local task **Mischief Maintained**, task ID `01a07a0f-8b1c-7c40-b4b3-128561e7af5e`.
 
 **Next creative milestone:** prototype one illustrated room with five interactive objects, then grow toward one house, three rooms, and fifteen stable memory locations. The room direction is endorsed for development; its detailed interaction and visual design still need to be demonstrated.
 
@@ -67,7 +67,7 @@ Baseline test/build and desktop/mobile results in `LOCAL-HANDOFF.md` and `atlas/
 
 ## Current pass — make the map a better place to explore
 
-The active work task owns implementation. M1–M4, the initial navigation pass, and V1/V2 are implemented with focused local checks. Artistic approval remains pending. The director’s original pale-map screenshots are a before-state; the renderer has since changed.
+The active work task owns implementation. M1–M4, the initial navigation pass, and V1/V2 are implemented with focused local checks. Mick approved this release; further art-direction work is tracked in V3. The director’s original pale-map screenshots are a before-state; the renderer has since changed.
 
 | ID | Work | Status | What a good result must demonstrate |
 | --- | --- | --- | --- |
@@ -97,6 +97,14 @@ This is priority steering for **Mischief Maintained**, ahead of future room/weat
 Mick explicitly requested a dedicated **Visual Director**, including responsibility for research. Agent `visual_director` completed its first assignment on **Astra High** in the side conversation. Its [visual brief and folding addendum](design/VISUAL-DIRECTOR-BRIEF.md) have been written, read and handed to **Mischief Maintained**, with eight evidence images under `docs/design/visual-director/`; local evidence links were checked. The main task owns material continuity, ink hierarchy, cartographic refinement and appropriate fold implementation. The agent owns research, art direction and read-only visual inspection; **Mischief Maintained** owns application implementation. A completed brief does not mean the app changes are complete or approved. Main-reported compositing changes after the director's screenshots are explicitly distinguished from the captured before-state.
 
 **V2 · Parchment folding and unfolding — implemented and behavior checked; user approved September 7.** Mick explicitly asked the Visual Director to find online examples of the Harry Potter map's distinctive physical folding/unfolding and adapt that motion to opening and closing atlas elements where it makes sense. The brief cites official film samples at 1:07, 1:22 and 1:27 plus a manufacturer's physical replica with nested folds. Recommended first demonstration: a fixed identity spine and two overlapping hinged leaves for a place sheet, reversed closing, a simpler upward toolkit flap, and one horizontal mobile hinge. Exact film timing was not measured; app timings/order are proposals. Preserve content readability, focus, rapid interruption/reversal, touch access and reduced-motion alternatives. Future room cutaways remain a later milestone. The place sheet now uses two reversible decorative hinges over stable semantic content, with one horizontal hinge on mobile. Its exterior artwork also opens/refolds over the existing illustrative interior. The toolkit uses a short upward utility flap. Five open/close cycles, two rapid reversals and switching places during opening were exercised; the map camera transform stayed unchanged. Mobile, Escape/focus return and reduced motion were checked. These changes do not implement future room cutaways.
+
+## Next visual pass — expressive parchment and nature
+
+**V3 · Status: Planned; not started.** September 7 feedback after approval of the current release: the visuals are improving but do not yet have the full desired Marauder’s Map character. Mick wants a stronger parchment identity and expressive illustrations of water and other natural elements. This refines the next visual direction; it does not withdraw approval of V1/V2 or interrupt their publication.
+
+Start with a focused visual study of one coast/beach/park region, guided by the Visual Director, before extending across the island. Proposed motifs to evaluate: small composed wave crests/current curls in real water, stipple or raked marks along mapped beaches, and palm/tree clusters or botanical hatch confined to actual green areas. Strengthen tactile paper variation, fibers, creases and local ink density while keeping the obscuring overlay removed. These are candidate treatments, not implemented assets or final placement instructions.
+
+The landscape must carry its identity with the panels hidden. Preserve real geography, readable routes and labels, negative space, stable world-anchored patterns and the navigation budget. Avoid uniform texture wallpaper and invented terrain. Consider restrained coastal motion only after the still composition works; retain pause and reduced-motion behavior. Weather (W1), new rooms and memory objects remain separate work.
 
 ## Next — landmarks become small worlds
 
@@ -215,7 +223,7 @@ The active work task should finish and validate M1–M4, assess M5/M7, and updat
 
 Repository root `AGENTS.md` points here. Local tasks using this working copy should read this guide before continuing and update it at meaningful milestones. The app's instructions and local setup handoff remain applicable.
 
-This file is local until explicitly synced, committed/shared, or uploaded elsewhere. A ChatGPT project chat without access to this filesystem cannot automatically read it. To carry continuity into such a chat, provide the latest guide as project reference material; keep this working-copy file as the maintained source and refresh shared copies after milestones.
+This guide is now committed and synchronized to the public GitHub repository. A ChatGPT project chat without access to this filesystem cannot automatically read it. To carry continuity into such a chat, provide the latest guide as project reference material; keep this working-copy file as the maintained source and refresh shared copies after milestones.
 
 
 ### September 7, 2026 — local implementation and final checks
@@ -226,10 +234,19 @@ This file is local until explicitly synced, committed/shared, or uploaded elsewh
 - Preserved the navigation optimizations during V1. Footprints now have a drawing budget of 48 marks on desktop / 30 on phones. Inspected immediate drag/zoom after folding and dense South Beach street rendering, with no browser errors observed. Performance profiles are diagnostic evidence, not a matched before/after FPS benchmark or a promise that no hardware will hiccup.
 - Final production build and four hosting tests passed; eight data/model tests passed after the catalogue/performance changes. The build retains a non-blocking 688 kB JavaScript chunk warning (about 176 kB compressed). `git diff --check` passed.
 - Reviewed opening, exploration, South Pointe selection, whole-island, 390×844 placement/chooser and static interior states. Five repeated card cycles, interrupted folding, a place change during opening, keyboard cancellation/focus and a fresh empty draft were checked. Earlier isolated-port save/reload evidence remains applicable; no synthetic records were added to the user’s port-5173 atlas.
-- Current work remains local and uncommitted. Git origin is connected to `Cool2bwichu/Mischief-Atlas`; no new publication was performed. Weather, creation timestamps and the new room/object experience remain backlog items. Mick approved the result and authorized merging and updating the published versions on September 7.
+- At the end of implementation, work remained local and uncommitted; the release entry below supersedes that state. Git origin is connected to `Cool2bwichu/Mischief-Atlas`; no new publication was performed. Weather, creation timestamps and the new room/object experience remain backlog items. Mick approved the result and authorized merging and updating the published versions on September 7.
 
 - Optional fresh director inspection could not run because its browser surface was unavailable. The final visual checks above were performed by the implementation task; no independent director approval is claimed. The director’s earlier research and brief remain the basis for V1/V2.
 
 ### September 7, 2026 — release approved
 
 Mick approved the completed refinement ("awesome") and requested merging and updating everything. This authorizes the repository merge and refreshing the existing published editions with their current audience. Release execution is underway; the subsequent release entry records verified outcomes. Backlog features remain separate work.
+
+### September 7, 2026 — release completed
+
+- [PR #2](https://github.com/Cool2bwichu/Mischief-Atlas/pull/2) merged into main as `5fe97876a378e949171166d414ebf8a3e61bbb84`; local main synchronized. It includes V1/V2, 792 added places, personal illustration choices and navigation optimizations.
+- Enabled the existing GitHub Actions Pages configuration. [Run 34086826322](https://github.com/Cool2bwichu/Mischief-Atlas/actions/runs/34086826322) completed successfully. [GitHub Pages](https://cool2bwichu.github.io/Mischief-Atlas/) serves the validated Pages bundle, new personal illustration asset and map tile (HTTP 200).
+- Refreshed the existing [Mischief Atlas Site](https://mischief-atlas.cool2bwichu1992.chatgpt.site) as version 2. Deployment `appgdep_6a9e4b66f6688191b2ba92e015de7de5` succeeded. Site source `080efd2fff9d71be4caa937c69b0e439798c85b2` is the app subtree synchronized from merged GitHub source. The current Site audience was verified public and preserved.
+- The Site’s live HTML references the validated root-path bundle; a new illustration and bundled map tile return HTTP 200. A browser opening was queued in the implementation task. Existing browser-local records were not transferred, cleared or modified by publishing.
+- Eight tests, four hosting tests and the Pages/root builds passed for the release. The non-blocking large-JavaScript-chunk warning remains. Local preview continues at port 5173.
+- Mick’s latest stronger-parchment / expressive-nature feedback is recorded as V3, planned and not started. It is the next visual study rather than a claim that this release completes the ultimate art direction.
