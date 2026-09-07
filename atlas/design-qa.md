@@ -53,3 +53,9 @@ Touch layout and controls were checked at a phone-sized viewport; physical-devic
 - [x] Public geographic attribution retained; private data excluded.
 - [x] Desktop and phone evidence saved.
 - [x] Five model tests, four hosting tests, and the production build passed.
+
+## GitHub Pages preparation — 2026-09-07
+
+Built successfully with `ATLAS_BASE_PATH=/Mischief-Atlas/`; all nine tests passed. Compiled HTML and CSS reference the project prefix. The browser also verified that map landmarks, images, search UI and unfolding rooms render under `/Mischief-Atlas/`. Normal local development retains `/`.
+
+The publication workflow is prepared, but the repository's Pages site is disabled. Live deployment verification is pending the owner selecting GitHub Actions in Settings → Pages. The connector exposes no Pages enablement action; no live-site success is claimed.

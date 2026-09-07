@@ -18,3 +18,4 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Animate landmark ink reveal, gently draw garden/pier illustrations, unfold place sheets and rooms. Keep motion restrained, pauseable, and respectful of reduced-motion preferences.
 - Landmark names are editable; retain original geographic identity. Memory rooms are illustrative and user-authored. No fabricated personal memories.
 - Use the original public GitHub repository; replace obsolete prototype files as needed and preserve privacy safeguards. Do not publish or deploy without a request.
+- On 2026-09-07 the user requested GitHub Pages publication, so deploying this prototype to that repository's Pages site is authorized. Build with `ATLAS_BASE_PATH=/Mischief-Atlas/`; keep map and artwork requests beneath `import.meta.env.BASE_URL`. Local development continues to use `/`.

@@ -10,6 +10,7 @@ import {
   Buildings,
 } from "@phosphor-icons/react";
 import { normalizeName, createRoom } from "./atlas-model.js";
+import { publicUrl } from "./public-url.js";
 export default function PlaceSheet({
   place,
   alias,
@@ -85,7 +86,7 @@ export default function PlaceSheet({
           </p>
           <img
             className="room-illustration"
-            src="/assets/interior.webp"
+            src={publicUrl("assets/interior.webp")}
             alt="An imagined ink-drawn interior with a library, courtyard, and stairway"
           />
           <p className="room-note">
@@ -134,7 +135,7 @@ export default function PlaceSheet({
             <div className="unfold-content">
               <img
                 className="interior-illustration"
-                src="/assets/interior.webp"
+                src={publicUrl("assets/interior.webp")}
                 alt="Illustrative memory rooms: a stairway, courtyard, and library"
               />
               <span className="illustration-caption">
@@ -196,7 +197,7 @@ export default function PlaceSheet({
             >
               {place.asset ? (
                 <img
-                  src={`/assets/${place.asset}.webp`}
+                  src={publicUrl(`assets/${place.asset}.webp`)}
                   alt={`Ink illustration of ${place.id === "ocean-drive" ? "the Colony Hotel on Ocean Drive" : place.name}`}
                 />
               ) : (

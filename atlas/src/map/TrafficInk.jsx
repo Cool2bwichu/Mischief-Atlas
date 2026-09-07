@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { pointAlongPath, trafficSettings } from "../atlas-model.js";
+import { publicUrl } from "../public-url.js";
 export default function TrafficInk({ map, motion, preset, visible }) {
   const canvas = useRef(null),
     clock = useRef(0),
@@ -7,7 +8,7 @@ export default function TrafficInk({ map, motion, preset, visible }) {
     [stamp, setStamp] = useState(null);
   useEffect(() => {
     let live = true;
-    fetch("/map/traffic-paths.json")
+    fetch(publicUrl("map/traffic-paths.json"))
       .then((r) => r.json())
       .then((data) => {
         const count = {};
@@ -39,7 +40,7 @@ export default function TrafficInk({ map, motion, preset, visible }) {
     img.onload = () => {
       if (live) setStamp(img);
     };
-    img.src = "/assets/footprint.png";
+    img.src = publicUrl("assets/footprint.png");
     return () => {
       live = false;
     };

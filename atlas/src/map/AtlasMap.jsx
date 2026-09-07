@@ -10,6 +10,7 @@ import {
 } from "@phosphor-icons/react";
 import { landmarks } from "../data/landmarks.js";
 import TrafficInk from "./TrafficInk.jsx";
+import { publicUrl } from "../public-url.js";
 const icons = {
   Park: Tree,
   Garden: Tree,
@@ -189,7 +190,7 @@ export default function AtlasMap({
               aria-pressed={selected === p.id}
             >
               {p.asset ? (
-                <img src={`/assets/${p.asset}.webp`} alt="" draggable="false" />
+                <img src={publicUrl(`assets/${p.asset}.webp`)} alt="" draggable="false" />
               ) : (
                 <Icon size={20} weight="light" />
               )}

@@ -33,4 +33,12 @@ npm run build
 npm run test:sites
 ```
 
-See `design-qa.md` for browser evidence and the selected visual comparison. The Sites runtime files are preserved for a future deployment; this build has not been deployed.
+See `design-qa.md` for browser evidence and the selected visual comparison. The Sites runtime files are preserved.
+
+## GitHub Pages
+
+`.github/workflows/pages.yml` builds and deploys the client when application changes reach `main`. GitHub repository Settings → Pages → Source must be **GitHub Actions**. The workflow can also be started manually from Actions → Publish Mischief Atlas.
+
+The Pages build uses `ATLAS_BASE_PATH=/Mischief-Atlas/`. Runtime map requests and illustrations honor that prefix; Vite rewrites CSS assets and font URLs. Only `dist/client` is published. Browser-local names and rooms stay on the device where they were entered; data from the temporary preview does not transfer automatically to the new site origin.
+
+For development on your own computer, `npm ci` then `npm run dev` still starts at the root path. Opening `index.html` directly as a `file://` URL is not supported because the map loads local data using HTTP requests.

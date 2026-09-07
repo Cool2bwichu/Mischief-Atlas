@@ -2,6 +2,7 @@ import L from "leaflet";
 import { VectorTile } from "@mapbox/vector-tile";
 import { PbfReader } from "pbf";
 import "leaflet/dist/leaflet.css";
+import { publicUrl } from "../public-url.js";
 
 // Render the original OSM vector geometry on canvas. No GPU or remote map service is required.
 const tileCache = new Map();
@@ -10,7 +11,7 @@ async function loadTile(z, x, y) {
   if (!tileCache.has(key))
     tileCache.set(
       key,
-      fetch(`/map/${key}.pbf`)
+      fetch(publicUrl(`map/${key}.pbf`))
         .then((r) => {
           if (!r.ok) throw new Error("Map tile unavailable");
           return r.arrayBuffer();
