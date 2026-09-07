@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import {
   MagnifyingGlass,
   Plus,
@@ -9,11 +9,22 @@ import {
   Footprints,
   X,
   CaretDown,
+  MapPinPlus,
+  ArrowUpLeft,
+  ArrowRight,
 } from "@phosphor-icons/react";
 import AtlasMap, { IslandInset, frameMap } from "./map/AtlasMap.jsx";
 import PlaceSheet from "./PlaceSheet.jsx";
-import { landmarks, landmarkById } from "./data/landmarks.js";
-import { parseSavedAtlas, trafficSettings } from "./atlas-model.js";
+import { landmarks } from "./data/landmarks.js";
+import neighborhoodPlaces from "./data/neighborhood-places.json";
+import { suggestPersonalArt } from "./data/personal-art.js";
+import LandmarkTool from "./LandmarkTool.jsx";
+import {
+  parseSavedAtlas,
+  trafficSettings,
+  createPersonalLandmark,
+  validMapCoordinates,
+} from "./atlas-model.js";
 import "@fontsource/im-fell-english/400.css";
 import "@fontsource/im-fell-english/400-italic.css";
 import "@fontsource/caveat/400.css";
@@ -34,14 +45,108 @@ export function App() {
     [motion, setMotion] = useState(
       () => !matchMedia("(prefers-reduced-motion: reduce)").matches,
     ),
-    [saveError, setSaveError] = useState(false);
+    [saveError, setSaveError] = useState(false),
+    [exploring, setExploring] = useState(false),
+    [placement, setPlacement] = useState(null),
+    [announcement, setAnnouncement] = useState("");
+  const addButton = useRef(null),
+    previousPlace = useRef(null),
+    lastSelection = useRef("ocean-drive"),
+    lastPlacement = useRef(null),
+    selectionTrigger = useRef(null);
+  if (selected) lastSelection.current = selected;
+  if (placement) lastPlacement.current = placement;
   const [saved, setSaved] = useState(() => {
     try {
       return parseSavedAtlas(localStorage.getItem("mischief-atlas-v1"));
     } catch {
-      return { aliases: {}, rooms: {} };
+      return parseSavedAtlas(null);
     }
   });
+  const places = useMemo(
+    () => [...landmarks, ...neighborhoodPlaces, ...saved.personalLandmarks],
+    [saved.personalLandmarks],
+  );
+  const placeById = useMemo(
+    () => Object.fromEntries(places.map((p) => [p.id, p])),
+    [places],
+  );
+  function explore() {
+    setExploring(true);
+    setSelected(null);
+    setSearchOpen(false);
+  }
+  function returnToOpening() {
+    setExploring(false);
+    setSelected("ocean-drive");
+    setQuery("");
+    setSearchOpen(false);
+    setWhole(false);
+    if (map.current) frameMap(map.current, false, motion);
+  }
+  function cancelPlacement() {
+    setPlacement(null);
+    setSelected(previousPlace.current);
+    setAnnouncement("Landmark cancelled. Nothing was added.");
+    addButton.current?.focus();
+  }
+  useEffect(() => {
+    if (!placement) return;
+    const escape = (e) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        cancelPlacement();
+      }
+    };
+    document.addEventListener("keydown", escape);
+    return () => document.removeEventListener("keydown", escape);
+  }, [!!placement]);
+  function placePin(coordinates) {
+    if (!validMapCoordinates(coordinates)) {
+      setAnnouncement("Choose a location within the Miami Beach map.");
+      return;
+    }
+    setPlacement((p) => (p ? { ...p, coordinates } : p));
+    setAnnouncement(
+      "Location chosen. Name your landmark and choose its illustration.",
+    );
+    if (map.current?.getContainer().clientWidth < 700) {
+      map.current.flyTo({
+        center: coordinates,
+        zoom: map.current.getZoom(),
+        offset: [0, -map.current.getContainer().clientHeight * 0.32],
+        duration: motion ? 350 : 0,
+      });
+    }
+  }
+  function saveLandmark(name, coordinates, art) {
+    const p = createPersonalLandmark(name, coordinates, art);
+    const next = {
+      ...saved,
+      personalLandmarks: [...saved.personalLandmarks, p],
+    };
+    try {
+      localStorage.setItem("mischief-atlas-v1", JSON.stringify(next));
+    } catch {
+      throw new Error(
+        "Your browser couldn’t save this landmark. Your draft is still here; try again.",
+      );
+    }
+    setSaved(next);
+    setPlacement(null);
+    setSelected(p.id);
+    setAnnouncement(`${p.name} added to your atlas and saved in this browser.`);
+    map.current?.flyTo({
+      center: p.coordinates,
+      zoom: Math.max(15, map.current.getZoom()),
+      offset: [
+        map.current.getContainer().clientWidth < 700 ? 0 : 150,
+        map.current.getContainer().clientWidth < 700 ? -120 : 0,
+      ],
+      duration: motion ? 800 : 0,
+    });
+    addButton.current?.focus();
+  }
   useEffect(() => {
     try {
       localStorage.setItem("mischief-atlas-v1", JSON.stringify(saved));
@@ -56,7 +161,7 @@ export function App() {
     media.addEventListener("change", change);
     return () => media.removeEventListener("change", change);
   }, []);
-  const results = landmarks
+  const results = places
     .filter((p) =>
       `${p.name} ${saved.aliases[p.id] || ""}`
         .toLocaleLowerCase()
@@ -64,14 +169,19 @@ export function App() {
     )
     .slice(0, 8);
   function choose(id, fly = false) {
+    selectionTrigger.current = document.activeElement;
+    setExploring(true);
     setSelected(id);
     setSearchOpen(false);
     if (fly && map.current) {
-      const p = landmarkById[id];
+      const p = placeById[id];
       map.current.flyTo({
         center: p.coordinates,
-        zoom: Math.max(15, map.current.getZoom()),
-        offset: [innerWidth < 700 ? 0 : 160, innerWidth < 700 ? -70 : 0],
+        zoom: Math.max(p.minZoom || 15, map.current.getZoom()),
+        offset: [
+          map.current.getContainer().clientWidth < 700 ? 0 : 160,
+          map.current.getContainer().clientWidth < 700 ? -120 : 0,
+        ],
         duration: motion ? 1000 : 0,
       });
       setWhole(false);
@@ -79,13 +189,14 @@ export function App() {
   }
   function toggleIsland() {
     if (!map.current) return;
+    explore();
     frameMap(map.current, !whole, motion);
     setWhole(!whole);
   }
   function renamePlace(name) {
     setSaved((s) => {
       const aliases = { ...s.aliases };
-      if (name === landmarkById[selected].name) delete aliases[selected];
+      if (name === placeById[selected].name) delete aliases[selected];
       else aliases[selected] = name;
       return { ...s, aliases };
     });
@@ -111,7 +222,7 @@ export function App() {
   }
   return (
     <main
-      className={`atlas-app ${motion ? "motion-on" : "motion-off"} ${selected ? "has-sheet" : ""}`}
+      className={`atlas-app ${motion ? "motion-on" : "motion-off"} ${selected ? "has-sheet" : ""} ${exploring ? "is-exploring" : "is-opening"} ${placement ? "is-placing" : ""}`}
     >
       <AtlasMap
         onReady={(m) => {
@@ -125,20 +236,40 @@ export function App() {
         motion={motion}
         preset={preset}
         inkVisible={inkVisible}
+        places={places}
+        exploring={exploring}
+        onExplore={explore}
+        placement={placement}
+        onPlace={placePin}
       />
       <header className="masthead">
-        <p className="edition">
-          A PERSONAL ATLAS <span>·</span> VOLUME I
-        </p>
-        <h1>
-          Mischief
-          <br />
-          <span>Atlas</span>
-        </h1>
-        <div className="title-rule">
-          <span>MIAMI BEACH</span>
+        <button
+          className="compact-identity"
+          onClick={returnToOpening}
+          aria-label="Mischief Atlas — return to opening"
+          disabled={!!placement}
+        >
+          <ArrowUpLeft size={17} weight="light" />
+          <span>
+            Mischief Atlas<small>Miami Beach</small>
+          </span>
+        </button>
+        <div className="opening-title" aria-hidden={exploring}>
+          <div className="opening-title-inner">
+            <p className="edition">
+              A PERSONAL ATLAS <span>·</span> VOLUME I
+            </p>
+            <h1>
+              Mischief
+              <br />
+              <span>Atlas</span>
+            </h1>
+            <div className="title-rule">
+              <span>MIAMI BEACH</span>
+            </div>
+            <p className="title-note">For the places you keep within.</p>
+          </div>
         </div>
-        <p className="title-note">For the places you keep within.</p>
         <div className="search-wrap">
           <MagnifyingGlass size={21} weight="light" />
           <input
@@ -154,12 +285,17 @@ export function App() {
                 : undefined
             }
             value={query}
+            disabled={!!placement}
             onChange={(e) => {
               setQuery(e.target.value);
               setSearchIndex(0);
               setSearchOpen(true);
             }}
-            onFocus={() => setSearchOpen(true)}
+            onFocus={() => {
+              setExploring(true);
+              setSelected(null);
+              setSearchOpen(true);
+            }}
             onKeyDown={handleKey}
             placeholder="Where shall we wander?"
           />
@@ -208,18 +344,24 @@ export function App() {
             </>
           )}
         </div>
+        {!exploring && (
+          <button className="begin-exploring" onClick={explore}>
+            Explore the map <ArrowRight size={16} />
+          </button>
+        )}
       </header>
       <IslandInset whole={whole} onClick={toggleIsland} />
-      <div className="marginal-note" aria-hidden="true">
+      <div className="marginal-note" aria-hidden="true" hidden={exploring}>
         Not all who wander
         <br />
         <span>are lost to memory.</span>
       </div>
-      {selected ? (
+      {lastSelection.current && (
         <PlaceSheet
-          place={landmarkById[selected]}
-          alias={saved.aliases[selected]}
-          rooms={saved.rooms[selected] || []}
+          open={!!selected}
+          place={placeById[selected || lastSelection.current]}
+          alias={saved.aliases[selected || lastSelection.current]}
+          rooms={saved.rooms[selected || lastSelection.current] || []}
           onRename={renamePlace}
           onRooms={(rooms) =>
             setSaved((s) => ({
@@ -227,49 +369,96 @@ export function App() {
               rooms: { ...s.rooms, [selected]: rooms },
             }))
           }
-          onClose={() => setSelected(null)}
+          onClose={() => {
+            setSelected(null);
+            const trigger = selectionTrigger.current;
+            if (trigger?.isConnected && trigger !== search.current)
+              trigger.focus();
+            else map.current?.getContainer().focus();
+          }}
         />
-      ) : (
-        <div className="folded-invitation">
-          <p>A city full of stories.</p>
-          <span>Touch a landmark to begin.</span>
-        </div>
       )}
       {saveError && (
         <div className="save-notice" role="status">
           Your browser couldn’t save these changes. Keep this tab open.
         </div>
       )}
-      <aside className="map-tools" aria-label="Map controls">
+      {lastPlacement.current && (
+        <LandmarkTool
+          open={!!placement}
+          coordinates={(placement || lastPlacement.current).coordinates}
+          initialArt={(placement || lastPlacement.current).art}
+          onCenter={() => placePin(map.current.getCenter())}
+          onCancel={cancelPlacement}
+          onSave={saveLandmark}
+        />
+      )}
+      <div className="sr-only" role="status" aria-live="polite">
+        {announcement}
+      </div>
+      <aside className="map-tools" aria-label="Map toolkit">
         <button
           className="compass-button"
           aria-label="Return to South Beach"
           onClick={() => {
             if (map.current) {
+              explore();
               frameMap(map.current, false, motion);
               setWhole(false);
             }
           }}
         >
           <span>N</span>
-          <Compass weight="thin" size={76} />
+          <Compass weight="thin" size={36} />
         </button>
         <div className="zoom-buttons">
           <button
             aria-label="Zoom in"
             disabled={!ready || view.zoom >= 18.25}
-            onClick={() => map.current.zoomIn({ duration: motion ? 450 : 0 })}
+            onClick={() => {
+              explore();
+              map.current.zoomIn({ duration: motion ? 450 : 0 });
+            }}
           >
             <Plus size={21} />
           </button>
           <button
             aria-label="Zoom out"
             disabled={!ready || view.zoom <= 11.45}
-            onClick={() => map.current.zoomOut({ duration: motion ? 450 : 0 })}
+            onClick={() => {
+              explore();
+              map.current.zoomOut({ duration: motion ? 450 : 0 });
+            }}
           >
             <Minus size={21} />
           </button>
         </div>
+        <button
+          ref={addButton}
+          className="add-landmark-button"
+          disabled={!ready}
+          aria-pressed={!!placement}
+          onClick={() => {
+            if (placement) {
+              cancelPlacement();
+              return;
+            }
+            previousPlace.current = selected;
+            explore();
+            setTrafficOpen(false);
+            setPlacement({
+              coordinates: null,
+              art: suggestPersonalArt(saved.personalLandmarks),
+            });
+            setAnnouncement(
+              "Choose a landmark location. Click the map, or use arrow keys and Enter at its centre.",
+            );
+            map.current.getContainer().focus();
+          }}
+        >
+          <MapPinPlus size={21} weight="light" />
+          <span>Add a landmark</span>
+        </button>
         <span className="zoom-label">
           {view.zoom >= 15
             ? "Closer still"
@@ -284,6 +473,7 @@ export function App() {
           aria-expanded={trafficOpen}
           aria-controls="traffic-panel"
           onClick={() => setTrafficOpen(!trafficOpen)}
+          disabled={!!placement}
         >
           <Footprints size={18} />
           <span>
@@ -351,7 +541,13 @@ export function App() {
       <footer className="atlas-footer">
         <span>
           CHAPTER I <span className="sep">/</span>{" "}
-          {whole ? "MIAMI BEACH" : "SOUTH BEACH"}
+          {view.zoom < 13
+            ? "MIAMI BEACH"
+            : (view.center?.[1] || 25.782) >= 25.846
+              ? "NORTH BEACH"
+              : (view.center?.[1] || 25.782) >= 25.802
+                ? "MID BEACH"
+                : "SOUTH BEACH"}
         </span>
         <span className="map-attribution">
           Map ©{" "}

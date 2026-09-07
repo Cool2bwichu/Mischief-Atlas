@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { pointAlongPath, trafficSettings } from "../atlas-model.js";
+import {
+  preparePath,
+  pointAlongPreparedPath,
+  trafficSettings,
+} from "../atlas-model.js";
 import { publicUrl } from "../public-url.js";
 export default function TrafficInk({ map, motion, preset, visible }) {
   const canvas = useRef(null),
@@ -52,12 +56,18 @@ export default function TrafficInk({ map, motion, preset, visible }) {
       settings = trafficSettings(preset);
     let frame,
       previous = 0,
+      lastPaint = 0,
+      dirty = true,
       projected = [];
     const project = () => {
       const dpr = Math.min(devicePixelRatio, 2),
-        box = map.getContainer();
-      el.width = box.clientWidth * dpr;
-      el.height = box.clientHeight * dpr;
+        box = map.getContainer(),
+        width = Math.round(box.clientWidth * dpr),
+        height = Math.round(box.clientHeight * dpr);
+      if (el.width !== width || el.height !== height) {
+        el.width = width;
+        el.height = height;
+      }
       el.style.width = box.clientWidth + "px";
       el.style.height = box.clientHeight + "px";
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -67,29 +77,37 @@ export default function TrafficInk({ map, motion, preset, visible }) {
             const q = map.project(c);
             return [q.x, q.y];
           });
-          return {
-            coords,
-            i,
-            length: coords
-              .slice(1)
-              .reduce(
-                (sum, b, j) =>
-                  sum + Math.hypot(b[0] - coords[j][0], b[1] - coords[j][1]),
-                0,
-              ),
-          };
+          const prepared = preparePath(coords);
+          return { prepared, coords, i, length: prepared.length };
         })
-        .filter((p) => p.length > 65);
-      if (!motion) draw(0);
+        .filter(
+          (p) =>
+            p.length > 65 &&
+            Math.max(...p.coords.map((c) => c[0])) >= -10 &&
+            Math.min(...p.coords.map((c) => c[0])) <= box.clientWidth + 10 &&
+            Math.max(...p.coords.map((c) => c[1])) >= -10 &&
+            Math.min(...p.coords.map((c) => c[1])) <= box.clientHeight + 10,
+        );
+      dirty = false;
     };
     const draw = (now) => {
-      if (motion && previous && !document.hidden)
+      frame = null;
+      const reveal = Math.max(0, Math.min(1, (map.getZoom() - 13.25) / 0.5));
+      const animate = motion && visible && reveal > 0 && !document.hidden;
+      if (!dirty && animate && now - lastPaint < 32) {
+        frame = requestAnimationFrame(draw);
+        return;
+      }
+      if (dirty) project();
+      lastPaint = now;
+      if (animate && previous)
         clock.current += Math.min((now - previous) / 1000, 0.08);
       previous = now;
       ctx.clearRect(0, 0, el.width, el.height);
-      const reveal = Math.max(0, Math.min(1, (map.getZoom() - 13.25) / 0.5));
+      let marks = 0;
+      const markBudget = el.clientWidth < 700 ? 30 : 48;
       if (visible && reveal)
-        for (const route of projected) {
+        routes: for (const route of projected) {
           if (route.i % 3 === 2 && settings.density === 1) continue;
           const count = route.i < 4 ? settings.density : 1;
           for (let trail = 0; trail < count; trail++) {
@@ -103,8 +121,8 @@ export default function TrafficInk({ map, motion, preset, visible }) {
                   (((n * 17 + route.i * 37 + trail * 113) % route.length) +
                     route.length) %
                   route.length;
-              const { point, angle } = pointAlongPath(
-                route.coords,
+              const { point, angle } = pointAlongPreparedPath(
+                route.prepared,
                 dist / route.length,
               );
               if (
@@ -120,6 +138,7 @@ export default function TrafficInk({ map, motion, preset, visible }) {
                   reveal *
                   (age === 0 ? Math.min(1, fraction * 3) : 1) *
                   0.78;
+              if (marks++ >= markBudget) break routes;
               ctx.save();
               ctx.globalAlpha = alpha;
               ctx.translate(
@@ -133,16 +152,28 @@ export default function TrafficInk({ map, motion, preset, visible }) {
             }
           }
         }
-      if (motion) frame = requestAnimationFrame(draw);
+      if (animate) frame = requestAnimationFrame(draw);
     };
-    project();
-    map.on("move", project);
-    map.on("resize", project);
-    if (motion) frame = requestAnimationFrame(draw);
+    const invalidate = () => {
+      dirty = true;
+      if (!frame) frame = requestAnimationFrame(draw);
+    };
+    const visibility = () => {
+      previous = 0;
+      if (document.hidden) {
+        cancelAnimationFrame(frame);
+        frame = null;
+      } else invalidate();
+    };
+    invalidate();
+    map.on("move", invalidate);
+    map.on("resize", invalidate);
+    document.addEventListener("visibilitychange", visibility);
     return () => {
       cancelAnimationFrame(frame);
-      map.off("move", project);
-      map.off("resize", project);
+      map.off("move", invalidate);
+      map.off("resize", invalidate);
+      document.removeEventListener("visibilitychange", visibility);
     };
   }, [map, paths, stamp, motion, preset, visible]);
   return <canvas ref={canvas} className="traffic-ink" aria-hidden="true" />;

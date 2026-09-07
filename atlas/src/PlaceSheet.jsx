@@ -11,14 +11,21 @@ import {
 } from "@phosphor-icons/react";
 import { normalizeName, createRoom } from "./atlas-model.js";
 import { publicUrl } from "./public-url.js";
+import { illustrationPath } from "./data/personal-art.js";
 export default function PlaceSheet({
   place,
+  open,
   alias,
   rooms,
   onRename,
   onRooms,
   onClose,
 }) {
+  const [entered, setEntered] = useState(false);
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setEntered(open));
+    return () => cancelAnimationFrame(frame);
+  }, [open]);
   const [unfolded, setUnfolded] = useState(false),
     [renaming, setRenaming] = useState(false),
     [draft, setDraft] = useState(""),
@@ -54,10 +61,21 @@ export default function PlaceSheet({
   }
   return (
     <section
-      className={`place-sheet ${unfolded ? "unfolded" : ""}`}
+      className={`place-sheet ${unfolded ? "unfolded" : ""} ${entered && open ? "sheet-open" : "sheet-closed"}`}
+      aria-hidden={!open}
+      inert={!open}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") {
+          e.stopPropagation();
+          onClose();
+        }
+      }}
       aria-label={`${alias || place.name} place card`}
-      key={place.id}
     >
+      <div className="paper-leaves" aria-hidden="true">
+        <i className="paper-leaf leaf-cover" />
+        <i className="paper-leaf leaf-inner" />
+      </div>
       <div className="sheet-topline">
         <span>
           MIAMI BEACH <span className="sep">/</span>{" "}
@@ -131,8 +149,12 @@ export default function PlaceSheet({
           <p className="sheet-subtitle">
             {unfolded ? "A little larger on the inside." : place.subtitle}
           </p>
-          {unfolded ? (
-            <div className="unfold-content">
+          <div className="sheet-visual">
+            <div
+              className="unfold-content"
+              hidden={!unfolded}
+              inert={!unfolded}
+            >
               <img
                 className="interior-illustration"
                 src={publicUrl("assets/interior.webp")}
@@ -191,14 +213,18 @@ export default function PlaceSheet({
                 </form>
               )}
             </div>
-          ) : (
             <div
-              className={`sheet-picture ${place.asset ? "" : "no-illustration"}`}
+              aria-hidden={unfolded}
+              className={`sheet-picture ${illustrationPath(place) ? "" : "no-illustration"}`}
             >
-              {place.asset ? (
+              {illustrationPath(place) ? (
                 <img
-                  src={publicUrl(`assets/${place.asset}.webp`)}
-                  alt={`Ink illustration of ${place.id === "ocean-drive" ? "the Colony Hotel on Ocean Drive" : place.name}`}
+                  src={publicUrl(illustrationPath(place))}
+                  alt={
+                    place.source === "personal"
+                      ? `Imagined ${place.art} illustration for ${alias || place.name}`
+                      : `Ink illustration of ${place.id === "ocean-drive" ? "the Colony Hotel on Ocean Drive" : place.name}`
+                  }
                 />
               ) : (
                 <>
@@ -211,7 +237,7 @@ export default function PlaceSheet({
                 </>
               )}
             </div>
-          )}
+          </div>
           {error && (
             <p role="alert" className="form-error">
               {error}
@@ -229,6 +255,7 @@ export default function PlaceSheet({
             </button>
             <button
               className="unfold-button"
+              aria-expanded={unfolded}
               onClick={() => setUnfolded(!unfolded)}
             >
               {unfolded ? <ArrowLeft size={18} /> : <DoorOpen size={19} />}{" "}
@@ -243,11 +270,28 @@ export default function PlaceSheet({
                 : "Some places hold more than they let on."}
             </span>
             <span>
-              {alias || rooms.length
+              {alias || rooms.length || place.source === "personal"
                 ? "Kept in this browser"
                 : "Yours to make a little mischief."}
             </span>
           </div>
+          {place.source === "snapshot" && (
+            <p className="place-provenance">
+              Mapped in OpenStreetMap · September 2026 snapshot.{" "}
+              <a
+                href={publicUrl("map/SOURCE.json")}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Map source
+              </a>
+            </p>
+          )}
+          {place.source === "personal" && (
+            <p className="place-provenance">
+              Your location · imagined illustration · kept in this browser
+            </p>
+          )}
         </>
       )}
     </section>

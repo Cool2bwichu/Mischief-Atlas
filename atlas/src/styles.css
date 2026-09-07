@@ -75,7 +75,7 @@ input {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  background: #ead2a5 url("/assets/parchment.webp") center/cover;
+  background: linear-gradient(#efdfbcdd, #efdfbcdd), url("/assets/parchment.webp") center/cover;
 }
 .atlas-app:after {
   content: "";
@@ -1109,14 +1109,15 @@ h1 > span {
 }
 .atlas-map {
   z-index: 0;
-  mask-image: linear-gradient(90deg, #0001 0%, #0003 29%, #000 49%);
+  mix-blend-mode: multiply;
+
 }
 .leaflet-container {
   background: transparent;
   font-family: inherit;
 }
 .leaflet-tile-pane {
-  mix-blend-mode: multiply;
+  mix-blend-mode: normal;
 }
 .leaflet-control-container {
   display: none;
@@ -1310,7 +1311,7 @@ h1 > span {
     bottom: calc(100% - 1px);
   }
   .atlas-map {
-    mask-image: linear-gradient(#0002 0px, #0005 150px, #000 220px);
+
   }
   .place-sheet.unfolded {
     max-height: 60svh;
