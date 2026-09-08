@@ -16,7 +16,7 @@ Mischief Atlas is a personal memory palace built around familiar places. Its pur
 
 Mick loves the current first pass and wants to develop its identity, not replace it. Preserve Awakening City's parchment, walnut and oxblood ink, serif lettering, restrained handwriting, illustrated Miami landmarks, and sense of enchantment. Real geographic geometry remains the foundation.
 
-**Current state:** V3/V4 have received a second local pass after Mick rejected the sparse/static water and imperceptible ornament in the first prototype. The revised pass is ready for Mick to review in **Mischief Maintained**, task ID `01a07a0f-8b1c-7c40-b4b3-128561e7af5e`. The earlier V1/V2 release remains published. **Review hold: Mick explicitly requested pausing further development after this pass. Do not extend, merge or publish the new pass until he reviews and gives further direction.**
+**Current state:** Mick requested merging and publishing the reviewed second V3/V4 pass on September 8. Release is in progress to the existing GitHub Pages and public ChatGPT Site, with the same audience. The earlier review hold is superseded for this release; further development remains paused afterward.
 
 **Next creative milestone:** prototype one illustrated room with five interactive objects, then grow toward one house, three rooms, and fifteen stable memory locations. The room direction is endorsed for development; its detailed interaction and visual design still need to be demonstrated.
 
@@ -283,3 +283,8 @@ Mick approved the completed refinement ("awesome") and requested merging and upd
 - Verified changing water canvas pixels across two seconds; identical paused pixels; reduced-motion static endpoints; actual illustration gathering/eroding phase captures; same-place reversal and replacement with New World Center artwork; immediately inert closing content; canvas reaches zero before sheet visibility ends. Drag/zoom returns the overlay to its settled geographic frame. Final samples: 13 water groups at whole island, 17 near North Beach, 6 in phone exploration (3 with the large opening card covering water). Real-water and clear-space availability determine count.
 - Eight model tests, production build and diff whitespace check passed. Existing large-JavaScript-chunk warning remains. Bounded local callback sample: water p95 0.4 ms (72 samples; max 1.5 ms); drawing p95 1.3 ms (107 samples; max 3.7 ms). These are JavaScript submission timings, not full rendering/FPS or a controlled before/after speed benchmark. White-backed illustration pixel comparison showed small differences (mean 1.65/255 per channel, maximum 25/255); visual preservation is checked, pixel identity is not claimed.
 - Next action: Mick reviews the running local version. Preserve this boundary; do not start rooms, weather, broader effect rollout, publishing or further development without his direction.
+
+
+### September 8, 2026 — publication requested
+
+- Mick explicitly requested publishing and merging the reviewed second parchment/water/ink pass. The existing GitHub repository, Pages site and public ChatGPT Site are the release destinations. No new feature work or audience change is requested.
