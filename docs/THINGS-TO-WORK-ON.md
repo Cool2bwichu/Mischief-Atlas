@@ -16,7 +16,7 @@ Mischief Atlas is a personal memory palace built around familiar places. Its pur
 
 Mick loves the current first pass and wants to develop its identity, not replace it. Preserve Awakening City's parchment, walnut and oxblood ink, serif lettering, restrained handwriting, illustrated Miami landmarks, and sense of enchantment. Real geographic geometry remains the foundation.
 
-**Current state:** Mick requested merging and publishing the reviewed second V3/V4 pass on September 8. Release is in progress to the existing GitHub Pages and public ChatGPT Site, with the same audience. The earlier review hold is superseded for this release; further development remains paused afterward.
+**Current state:** The reviewed second V3/V4 parchment/water/ink pass was merged and published September 8. Both existing editions are live: [GitHub Pages](https://cool2bwichu.github.io/Mischief-Atlas/) and [ChatGPT Site](https://mischief-atlas.cool2bwichu1992.chatgpt.site). **Further development remains paused pending Mick’s direction.**
 
 **Next creative milestone:** prototype one illustrated room with five interactive objects, then grow toward one house, three rooms, and fifteen stable memory locations. The room direction is endorsed for development; its detailed interaction and visual design still need to be demonstrated.
 
@@ -288,3 +288,12 @@ Mick approved the completed refinement ("awesome") and requested merging and upd
 ### September 8, 2026 — publication requested
 
 - Mick explicitly requested publishing and merging the reviewed second parchment/water/ink pass. The existing GitHub repository, Pages site and public ChatGPT Site are the release destinations. No new feature work or audience change is requested.
+
+
+### September 8, 2026 — reviewed pass merged and live
+
+- [PR #3](https://github.com/Cool2bwichu/Mischief-Atlas/pull/3) merged as `9015d59146012d8795cf7f844c8ec3f11e2bc709`.
+- [GitHub Pages release](https://github.com/Cool2bwichu/Mischief-Atlas/actions/runs/34186588699) succeeded. Live page references the new release bundles and its worn-parchment asset exactly matches the released bytes.
+- Existing public ChatGPT Site updated successfully to version 3. Sites source revision `67d5f1b555c9b379e64221176c514c4fc1488edf`; deployment `appgdep_6a9f8d24138c8191ac45d586b6293e55` reported succeeded. Same Site and audience preserved.
+- Four hosting tests and both root-path/Sites and GitHub Pages builds passed before publication; the existing bundle-size warning remains. Earlier focused behavior and visual checks remain the evidence for this unchanged implementation. No additional development was performed.
+- Release finished. Pause development until Mick gives further direction.
