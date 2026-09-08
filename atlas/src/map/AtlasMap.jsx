@@ -18,6 +18,7 @@ import {
 } from "@phosphor-icons/react";
 import { illustrationPath } from "../data/personal-art.js";
 import TrafficInk from "./TrafficInk.jsx";
+import WaterInk from "./WaterInk.jsx";
 import { publicUrl } from "../public-url.js";
 const icons = {
   Park: Tree,
@@ -104,9 +105,12 @@ export default function AtlasMap({
       rect.top < tools.bottom + 10;
     const top = overlapsTools ? tools.top - rect.height - 16 : rect.top;
     setRibbon({
+      id: place.id,
+      kind: place.kind,
       coordinates: place.coordinates,
       name: aliases[place.id] || place.name,
       width: rect.width,
+      height: rect.height,
       x: rect.left - root.left + rect.width / 2 - point.x,
       y: top - root.top - point.y,
       leader: rect.top - top,
@@ -328,6 +332,12 @@ export default function AtlasMap({
           {error}
         </p>
       )}
+      <WaterInk
+        map={map}
+        motion={motion}
+        exploring={exploring}
+        selected={selected}
+      />
       <TrafficInk
         map={map}
         motion={motion}

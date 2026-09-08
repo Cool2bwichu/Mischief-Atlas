@@ -358,6 +358,7 @@ export function App() {
       </div>
       {lastSelection.current && (
         <PlaceSheet
+          motion={motion}
           open={!!selected}
           place={placeById[selected || lastSelection.current]}
           alias={saved.aliases[selected || lastSelection.current]}

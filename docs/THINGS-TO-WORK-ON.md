@@ -16,7 +16,7 @@ Mischief Atlas is a personal memory palace built around familiar places. Its pur
 
 Mick loves the current first pass and wants to develop its identity, not replace it. Preserve Awakening City's parchment, walnut and oxblood ink, serif lettering, restrained handwriting, illustrated Miami landmarks, and sense of enchantment. Real geographic geometry remains the foundation.
 
-**Current work:** the map/toolkit refinement is merged and published. Mick approved this release; the next visual refinement is V3 below. Implementation was completed in the local task **Mischief Maintained**, task ID `01a07a0f-8b1c-7c40-b4b3-128561e7af5e`.
+**Current state:** Mick requested merging and publishing the reviewed second V3/V4 pass on September 8. Release is in progress to the existing GitHub Pages and public ChatGPT Site, with the same audience. The earlier review hold is superseded for this release; further development remains paused afterward.
 
 **Next creative milestone:** prototype one illustrated room with five interactive objects, then grow toward one house, three rooms, and fifteen stable memory locations. The room direction is endorsed for development; its detailed interaction and visual design still need to be demonstrated.
 
@@ -100,11 +100,23 @@ Mick explicitly requested a dedicated **Visual Director**, including responsibil
 
 ## Next visual pass — expressive parchment and nature
 
-**V3 · Status: Planned; not started.** September 7 feedback after approval of the current release: the visuals are improving but do not yet have the full desired Marauder’s Map character. Mick wants a stronger parchment identity and expressive illustrations of water and other natural elements. This refines the next visual direction; it does not withdraw approval of V1/V2 or interrupt their publication.
+**V3 · Status: Second local pass implemented and checked; awaiting Mick’s review.** September 7 feedback after approval of the current release: the visuals are improving but do not yet have the full desired Marauder’s Map character. Mick wants a stronger parchment identity and expressive illustrations of water and other natural elements. This refines the next visual direction; it does not withdraw approval of V1/V2.
 
-Start with a focused visual study of one coast/beach/park region, guided by the Visual Director, before extending across the island. Proposed motifs to evaluate: small composed wave crests/current curls in real water, stipple or raked marks along mapped beaches, and palm/tree clusters or botanical hatch confined to actual green areas. Strengthen tactile paper variation, fibers, creases and local ink density while keeping the obscuring overlay removed. These are candidate treatments, not implemented assets or final placement instructions.
+The first static, sparse coastal composition was insufficient in Mick’s review and is superseded by [LIVING-PARCHMENT-BRIEF.md](design/LIVING-PARCHMENT-BRIEF.md). The new continuous worn-paper asset has irregular central mottling, fibers and restrained folds under a light 8% tint. Three evolving water stroke families now cover the available geographic water polygons across the island. Their shapes change over 4.2–6.6-second cycles, with dark crest heads and finer companion strokes. Full motion envelopes are water-clipped and clear of labels/controls; bounded cached frames animate at 24 paints/second, freeze during gestures, follow the camera and resume afterward. Static sand/vegetation detail remains on mapped areas.
 
 The landscape must carry its identity with the panels hidden. Preserve real geography, readable routes and labels, negative space, stable world-anchored patterns and the navigation budget. Avoid uniform texture wallpaper and invented terrain. Consider restrained coastal motion only after the still composition works; retain pause and reduced-motion behavior. Weather (W1), new rooms and memory objects remain separate work.
+
+Further user emphasis: the Visual Director must make the parchment look and feel as close to the supplied real-map references as practical, then give the main orchestrator a concrete treatment to implement. Compare paper hue/tonal depth, mottling, fibers, fold creases, edge wear and ink contrast/absorption. Strong tactile identity is a requirement, not an optional subtle finishing texture. Distinguish cinematic lighting from paper characteristics; keep material beneath the ink and essential labels readable. Earlier suggested texture-intensity numbers are starting proposals, not restrictions that override this feedback. Judge a before/after representative view against the references before extending the treatment.
+
+### Ink that dissolves and appears
+
+**V4 · Status: Actual place-card illustration effect implemented and checked in the second local pass; awaiting Mick’s review.** Mick supplied [Every Marauder's Map Scene](https://www.youtube.com/watch?v=HmGrtROhey0) as an explicit visual reference and asked the director to perfect the way elements dissolve away and appear into existence, then hand it off for implementation.
+
+The director inspected the user’s actual recording: separate pigment pools join into dense masses while lettering and finer architecture resolve on overlapping schedules. The recording includes a backward scrub, not an observed disappearance; the new inverse erosion is explicitly an original adaptation. Recording-relative evidence, material comparisons and timing limits are in the finalized brief.
+
+Evaluate use on selected landmarks, annotations and restrained water/nature drawings where it explains attention or state. Keep real geographic geometry stable, interaction immediate, content and focus intact, and reduced-motion/paused states fully readable. Coordinate this ink behavior with the existing physical folds without stacking long delays. Avoid full-map animated filters, unbounded particles, per-frame geographic regeneration or new navigation lag.
+
+Read [INK-APPARITION-BRIEF.md](design/INK-APPARITION-BRIEF.md) for recording provenance and [LIVING-PARCHMENT-BRIEF.md](design/LIVING-PARCHMENT-BRIEF.md) for the revised scope. The inadequate small selection ornament has been removed. The actual large exterior illustration on each illustrated place card now gathers from image-derived pigment regions over 1.1 seconds, with separate dense/fine masks, and erodes over 680 ms on close. White image backing becomes transparent, leaving stable paper beneath. Paper remains open briefly before folding; semantics and inertness close immediately. Same-place reversals retain progress; switching places replaces the prior illustration immediately. Pause/reduced motion settle into a static endpoint. This does not animate whole-map geography, room objects or unillustrated cards. **This local pass is finished; development is paused for review again.**
 
 ## Next — landmarks become small worlds
 
@@ -250,3 +262,29 @@ Mick approved the completed refinement ("awesome") and requested merging and upd
 - The Site’s live HTML references the validated root-path bundle; a new illustration and bundled map tile return HTTP 200. A browser opening was queued in the implementation task. Existing browser-local records were not transferred, cleared or modified by publishing.
 - Eight tests, four hosting tests and the Pages/root builds passed for the release. The non-blocking large-JavaScript-chunk warning remains. Local preview continues at port 5173.
 - Mick’s latest stronger-parchment / expressive-nature feedback is recorded as V3, planned and not started. It is the next visual study rather than a claim that this release completes the ultimate art direction.
+
+
+### September 7, 2026 — local parchment/ink prototype ready; review hold
+
+- Branch `codex/ink-apparition`, based on released main `c7ff4a9`. No new merge, push or deployment. Published editions retain V1/V2.
+- Preserved the existing paper asset, geographic raster cache, single camera positioning loop, personal data model and physical folds. Added only original vector nature/ornament marks; the user's recording and all source frames remain private under `.git`.
+- Director’s static comparison accepted the stronger paper as a practical first material pass, with film-lighting limits explicitly retained. Updated repeated offshore curls to three distinct silhouettes. Same-camera 1280 × 720 material A/B captures compare the old 87% veil with the new 28% veil; geography and controls remain crisp. Phone opening/exploration inspected at 390 × 844.
+- Browser checks: local dense pigment precedes fine detail; fully resolved animation is pixel-identical to its static source; close/reopen reverses existing progress; fast A→B→A retains at most two decorations and resolves to the correct place with unchanged camera; camera interruption leaves no residual ornament; marker animation names remain `none` after zoom. Pause/reduced motion show immediate static endpoints, Escape closes with inert hidden content. A synthetic landmark saved in a separate browser profile appeared once after its camera flight, then settled; user browser data was untouched.
+- Measured 79 effect callbacks during the final rapid-switch sequence: mean 0.16 ms, p95 0.30 ms, maximum 0.30 ms. This measures JavaScript/canvas submission for the small effect, not GPU completion, whole-map FPS or every device. Eight model tests and the production build passed; the existing large-bundle warning remains.
+- Local evidence under ignored `output/playwright/`: `ink-review.webm`, `ink-phase-*.png`, `ink-final.png`, `material-old-veil.png`, `material-new-veil.png`, `phone-opening.png`, `phone-exploring.png`. Phase filenames are target thresholds; screenshots can be later because capture takes time. The video records the actual sequence. These are review artifacts, not public assets.
+- **User decision:** finish this current task, then pause further development for review. The local prototype is the review boundary, not final artistic approval or permission to extend/publish. Next action is Mick’s review and feedback; weather, timestamps, rooms and broader ink rollout stay untouched.
+
+
+### September 7, 2026 — second living-parchment pass; review hold resumed
+
+- Mick rejected the first sparse, static waves and tiny ink ornament. He explicitly requested another Visual Director research/implementation pass. The director supplied the new brief and reviewed final material, water hierarchy and actual illustration phase samples; this is not user approval.
+- Implemented the revised water, paper and illustration behavior described in V3/V4 above. No new production dependency, saved-data change, merge, push or deployment. Released V1/V2 remains unchanged.
+- Local browser evidence (ignored `output/playwright/`): `living-opening-final.png`, `living-whole-island-final.png`, `living-north-final.png`, `living-phone.png`, `living-phone-explore.png`, `living-gathering.png`, `living-dissolving.png`; `living-review.webm` captures an earlier same-pass density setting. Private reference recording is not included in publishable files.
+- Verified changing water canvas pixels across two seconds; identical paused pixels; reduced-motion static endpoints; actual illustration gathering/eroding phase captures; same-place reversal and replacement with New World Center artwork; immediately inert closing content; canvas reaches zero before sheet visibility ends. Drag/zoom returns the overlay to its settled geographic frame. Final samples: 13 water groups at whole island, 17 near North Beach, 6 in phone exploration (3 with the large opening card covering water). Real-water and clear-space availability determine count.
+- Eight model tests, production build and diff whitespace check passed. Existing large-JavaScript-chunk warning remains. Bounded local callback sample: water p95 0.4 ms (72 samples; max 1.5 ms); drawing p95 1.3 ms (107 samples; max 3.7 ms). These are JavaScript submission timings, not full rendering/FPS or a controlled before/after speed benchmark. White-backed illustration pixel comparison showed small differences (mean 1.65/255 per channel, maximum 25/255); visual preservation is checked, pixel identity is not claimed.
+- Next action: Mick reviews the running local version. Preserve this boundary; do not start rooms, weather, broader effect rollout, publishing or further development without his direction.
+
+
+### September 8, 2026 — publication requested
+
+- Mick explicitly requested publishing and merging the reviewed second parchment/water/ink pass. The existing GitHub repository, Pages site and public ChatGPT Site are the release destinations. No new feature work or audience change is requested.

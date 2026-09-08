@@ -3,6 +3,7 @@ import { VectorTile } from "@mapbox/vector-tile";
 import { PbfReader } from "pbf";
 import "leaflet/dist/leaflet.css";
 import { publicUrl } from "../public-url.js";
+import { drawCoastalNature, hasCoastalNature } from "./nature-ink.js";
 
 // Render the original OSM vector geometry on canvas. No GPU or remote map service is required.
 const tileCache = new Map();
@@ -202,6 +203,34 @@ const InkTiles = L.GridLayer.extend({
           0.5,
           (f) => f.properties.class === "sand",
         );
+        if (hasCoastalNature(coords)) {
+          const polygons = { wave: [], sand: [], palm: [] };
+          for (const f of [
+            ...(layers.water || []),
+            ...(layers.landcover || []),
+          ]) {
+            const kind = layers.water?.includes(f)
+              ? "wave"
+              : f.properties.class === "sand"
+                ? "sand"
+                : ["wood", "grass"].includes(f.properties.class)
+                  ? "palm"
+                  : null;
+            if (!kind || f.type !== 3) continue;
+            const outline = new Path2D();
+            for (const ring of f.geometry) {
+              ring.forEach((p, i) => {
+                const x = ((p.x / f.extent) * 256 - offsetX) * factor;
+                const y = ((p.y / f.extent) * 256 - offsetY) * factor;
+                if (i === 0) outline.moveTo(x, y);
+                else outline.lineTo(x, y);
+              });
+              outline.closePath();
+            }
+            polygons[kind].push(outline);
+          }
+          drawCoastalNature(ctx, coords, polygons);
+        }
         const buildingScale =
           coords.z < 14 ? "distant" : coords.z < 16 ? "near" : "detail";
         for (const f of layers.building || []) {
@@ -409,6 +438,57 @@ export class InkMap {
   getCenter() {
     const c = this.map.getCenter();
     return [c.lng, c.lat];
+  }
+  // The decorative sea shares the same bundled water polygons as the map. This
+  // runs only for a settled camera; frame painting never decodes map geometry.
+  async getWaterScene() {
+    const zoom = this.map.getZoom();
+    const sourceZoom = Math.max(11, Math.min(14, Math.floor(zoom)));
+    const count = 2 ** sourceZoom,
+      bounds = this.map.getBounds();
+    const tilePoint = (lng, lat) => {
+      const sin = Math.sin((lat * Math.PI) / 180);
+      return [
+        ((lng + 180) / 360) * count,
+        (0.5 - Math.log((1 + sin) / (1 - sin)) / (4 * Math.PI)) * count,
+      ];
+    };
+    const nw = tilePoint(
+      Math.max(-80.205, bounds.getWest()),
+      Math.min(25.886, bounds.getNorth()),
+    );
+    const se = tilePoint(
+      Math.min(-80.105, bounds.getEast()),
+      Math.max(25.746, bounds.getSouth()),
+    );
+    const jobs = [];
+    for (let x = Math.floor(nw[0]); x <= Math.floor(se[0]); x++)
+      for (let y = Math.floor(nw[1]); y <= Math.floor(se[1]); y++)
+        jobs.push(
+          loadTile(sourceZoom, x, y).then(
+            (layers) =>
+              (layers.water || []).map((f) =>
+                f.geometry.map((ring) =>
+                  ring.map((p) => [
+                    (x + p.x / f.extent) / count,
+                    (y + p.y / f.extent) / count,
+                  ]),
+                ),
+              ),
+            () => [],
+          ),
+        );
+    const geometry = (await Promise.all(jobs)).flat();
+    return { geometry, zoom };
+  }
+  getPixelFrame() {
+    const origin = this.map.getPixelBounds().min;
+    return {
+      x: origin.x,
+      y: origin.y,
+      scale: 256 * 2 ** this.map.getZoom(),
+      zoom: this.map.getZoom(),
+    };
   }
   project(c) {
     return this.map.latLngToContainerPoint([c[1], c[0]]);

@@ -75,7 +75,9 @@ input {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  background: linear-gradient(#efdfbcdd, #efdfbcdd), url("/assets/parchment.webp") center/cover;
+  background:
+    linear-gradient(#f1e4cb14, #f1e4cb14),
+    url("/assets/parchment-worn.webp") center/cover;
 }
 .atlas-app:after {
   content: "";
@@ -143,7 +145,7 @@ input {
   transition:
     transform 0.5s,
     filter 0.5s;
-  animation: ink-arrives 1.4s ease-out both;
+  animation: none;
 }
 .landmark > span {
   font-size: 11px;
@@ -442,7 +444,7 @@ h1 > span {
   height: 100%;
   object-fit: contain;
   filter: saturate(0.65) sepia(0.13);
-  animation: ink-arrives 1s ease-out both;
+  animation: none;
 }
 .sheet-picture.no-illustration {
   gap: 30px;
@@ -491,7 +493,7 @@ h1 > span {
   height: 180px;
   object-fit: contain;
   mix-blend-mode: multiply;
-  animation: ink-arrives 1.1s ease both;
+  animation: none;
 }
 .illustration-caption {
   display: block;
@@ -778,20 +780,6 @@ h1 > span {
 }
 .motion-off .landmark > img {
   clip-path: none;
-}
-@keyframes ink-arrives {
-  0% {
-    opacity: 0;
-    clip-path: inset(0 100% 0 0);
-    filter: blur(1px) sepia(0.4);
-  }
-  30% {
-    opacity: 0.8;
-  }
-  100% {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-  }
 }
 @keyframes paper-unfold {
   from {
@@ -1110,7 +1098,6 @@ h1 > span {
 .atlas-map {
   z-index: 0;
   mix-blend-mode: multiply;
-
 }
 .leaflet-container {
   background: transparent;
@@ -1311,7 +1298,6 @@ h1 > span {
     bottom: calc(100% - 1px);
   }
   .atlas-map {
-
   }
   .place-sheet.unfolded {
     max-height: 60svh;

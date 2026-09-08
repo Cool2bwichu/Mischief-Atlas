@@ -11,9 +11,11 @@ import {
 } from "@phosphor-icons/react";
 import { normalizeName, createRoom } from "./atlas-model.js";
 import { publicUrl } from "./public-url.js";
+import InkDrawing from "./InkDrawing.jsx";
 import { illustrationPath } from "./data/personal-art.js";
 export default function PlaceSheet({
   place,
+  motion,
   open,
   alias,
   rooms,
@@ -218,7 +220,10 @@ export default function PlaceSheet({
               className={`sheet-picture ${illustrationPath(place) ? "" : "no-illustration"}`}
             >
               {illustrationPath(place) ? (
-                <img
+                <InkDrawing
+                  key={place.id}
+                  open={open}
+                  motion={motion}
                   src={publicUrl(illustrationPath(place))}
                   alt={
                     place.source === "personal"

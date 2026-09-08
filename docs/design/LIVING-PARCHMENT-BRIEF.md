@@ -1,0 +1,63 @@
+# Living parchment — visible water and disappearing drawings
+
+September 7, 2026 · Ready for one local implementation pass. This is a revised design handoff, not an approval of the previous prototype or authorization to publish.
+
+## The correction
+
+Mick found the previous result insufficient: water looked still and sparsely marked; the requested dissolve was not perceptible; parchment improved but remained short of the references. His review supersedes the director's earlier limited static-material acceptance. The next pass must change what a person sees during ordinary use, without requiring a debug sequence or explanation.
+
+Deliver three coequal changes: **moving drawn water across the bay and Atlantic; the actual landmark illustration gathering and dissolving; visibly aged material across the whole paper field.** A tiny animated flourish does not satisfy the illustration requirement. A stronger beige tint does not satisfy the material requirement. Preserve real geographic geometry, current artwork identity, readable names, stable records and responsive navigation.
+
+## Fresh research and evidence limits
+
+- **Actual film pixels:** the director re-inspected private recording frames **5.77 s** and **9.23 s**, alongside the previously inspected 6.92–10.39 s sequence. Blank paper already has cloudy variation, small stains, worn edges and a deep physical fold. Ink grows in irregular connected masses while finer architecture resolves independently. The recording was scrubbed backward: it still provides **no verified disappearing-ink sequence**. The proposed exit below is our adaptation, not a claimed film transcription. [Previous evidence log](ink-apparition/INSPECTION-LOG.md). Private frames remain under `.git`; do not publish or use them as textures.
+- **Official prop context, refreshed:** [Noble Collection](https://noblecollection.co.uk/product/marauders-map/) describes the expanding paper replica and the story's activation/wiping. Its description supports the concept of returning to blank paper; it does not establish a visual dissolve algorithm or timing. Product photography and film lighting are not calibrated color samples.
+- **Cartographic material and water vocabulary:** [Nortantis, by its creator](https://jandjheydorn.com/nortantis), separates four ocean-wave styles, coastline shading, frayed/grunged edges and texture-generated paper. Transfer that separation: varied water marks and material wear should each have deliberate controls. Its CPU-heavy rendering architecture is not a model for our continuous animation.
+- **Directional water motion:** [technical artist Malte Szellas's ocean shader breakdown](https://maltes.artstation.com/projects/o2k50w) explains shore-distance-driven wave phase, making waves roll toward shore. Transfer coherent direction and spatial phase into brown linework; do not introduce reflective 3D water, caustics or moving geography. The accompanying videos were not visually inspected in this pass.
+- **Layer discipline:** [Megan Reddy's fantasy-map project](https://meganr28.github.io/code/fantasymap/) describes separate asset, outline, faded-paper and coastline-hatching passes. This supports preserving geographic outlines while texture and illustrative marks carry the style. Its screenshots were located, but fresh visual inspection was unavailable; no unseen composition claim is made.
+
+Fresh web research was completed. A dedicated IAB opening was unavailable to this agent; no repeat Chrome/native capture loop was attempted. Proposed motion and numerical targets below are original interface direction, not measurements of the cited works.
+
+## 1. Water should visibly move while the map rests
+
+Use a continuous **living engraving** layer over actual water, separate from cached geographic tiles. The opening South Beach view must show active marks on both sides of the island without zooming or selecting a place. Carry the same vocabulary into Mid/North Beach and whole-island views; do not restrict it to three authored coastal coordinates.
+
+Compose three related stroke families: (a) Atlantic paired crests with one darker hooked head and broken trailing lines; (b) long, shallow bay currents with shorter companion hatches; (c) sparse overlapping ripple arcs in sheltered water. Mix at least three distinctly drawn silhouettes rather than scaling one emblem. Atlantic marks may travel generally shoreward; bay marks can drift along broad channels. They are illustrative, not real current data.
+
+At a representative 1280×720 view, aim for roughly **12–24 visible groups** across available water, with several in each large visible basin; about 6–12 on a phone. Keep broad empty intervals and exclude label/control reservations. The count is a composition target, not a requirement to place marks on land when water is scarce. Larger groups should span roughly **50–110 CSS px**, supported by smaller marks; the earlier tiny glyphs were below the intended visual importance.
+
+Animate actual stroke shape/position: a crest advances about **12–24 px** through a **4–7 second** cycle, its trailing hatch lengthening and breaking as another crest forms. Offset neighboring phases and vary lengths so the whole sea does not inhale together. Preserve a substantial visible stroke through most of the cycle; opacity pulsing alone is insufficient. Do not slide an intact sticker endlessly across the paper or make the coastline wobble. The default view should reveal unmistakable movement within **two seconds** of hands-off observation.
+
+Generate anchors deterministically in world coordinates within known water geometry, with spacing/culling calculated at settled camera states. Clip each group's complete motion envelope to real water, including islands and holes. A current near shore must not cross a street at another phase. Reuse prepared paths/masks; one bounded, decorative canvas or equivalent layer is sufficient. Keep stable geographic anchors while panning, freeze decorative phase during camera movement if needed, then resume smoothly. Pause/reduced motion retains complete static water engraving.
+
+## 2. Dissolve the illustration people are looking at
+
+The primary target is the **large existing landmark illustration inside the open place sheet**, not an underline, separate vignette or hidden secondary object. Use its actual full drawing at current visible size. Preserve the title, geographic name, controls and paper throughout entry. The same prepared pigment can serve successful personal-landmark creation after the card interaction is convincing.
+
+On selection, start the sheet opening promptly; then let the visible illustration gather over approximately **900–1,200 ms**, overlapping the fold. Begin brown masses at real dark parts of the drawing, resolve recognizable roof/palm/structural areas, then fill finer hatching. At halfway, some local portions must already be crisp and opaque beside absent or partial regions. A globally translucent photograph or rectangular wipe fails this test.
+
+On close, make the **actual illustration** erode into connected paper-colored voids over approximately **550–750 ms**. Weak detail recedes first, stronger contours/masses persist briefly, then ink disappears. Keep enough of the paper plane open for the first **300–400 ms** to witness it; let the existing fold finish during the latter part, rather than immediately hiding the entire drawing. Logical close, focus return and inertness happen immediately; this short outgoing visual must never retain active controls or delay navigation. Rapid new selection replaces the pending exit cleanly. Reduced motion skips the decorative retention.
+
+Do not mask a baked beige/white image rectangle. Prepare a reusable **ink-only alpha rendition** of the existing illustration, with paper preserved beneath. Root should validate the extraction on palms, pale walls, fine hatch and light negative spaces before broad application. Do not erase legitimate light-colored architectural detail merely because its luminance resembles paper. At completion, the composed final drawing must visually match the original; if the temporary/static swap pops, the extraction or compositing is not ready.
+
+Reuse the bounded deterministic pigment mask machinery already written, but adapt its schedule to actual artwork and a meaningful canvas size. Two or three connected growth origins plus distinct fine-detail timing remain appropriate. Cached masks/ink surfaces should do the work; no full-image pixel analysis per frame. Same-object reversal must continue from current progress; A→B should never leave A's image under B's title. Saved landmarks remain saved when their card closes.
+
+## 3. Paper needs wear in the middle, not just at the boundary
+
+The existing texture has useful grain, folds and edge wear, and reducing the pale layer from 87% to 28% exposed it. Mick's review establishes that this change alone is insufficient. The next material pass should create stronger **mid-scale unevenness across island and open-water regions**, while keeping clear reading zones.
+
+Use the recording's blank-paper frame as the material comparison: a pale bone/honey base, broad irregular warm and cooler tan areas, scattered small age marks, fine surface texture, and a crease valley with a narrow lighter ridge. Keep the film's dark physical fold out of the base-color estimate. Our map should have tonal depth without becoming uniformly brown/yellow or looking burned.
+
+Retain a continuous static paper layer beneath all ink. Add or prepare a coherent original material treatment with **three scales**: broad areas spanning roughly a quarter of the viewport; several irregular hand-sized worn patches; very fine fibers/flecks. Place meaningful variation in central negative space as well as edges, so hiding the controls does not reveal a flat center. Feather irregular boundaries; do not use a few perfectly elliptical gradients that read as spotlights. Existing faint fold traces may remain, with gentle local ridge/valley contrast. Avoid new dark grid-like creases across streets.
+
+An original replacement texture is justified if adjusting the existing material cannot supply this variation. Keep it static, compressed and precomposed; use image generation for new material artwork if needed rather than borrowing a film/product photograph. The clear-paper label ribbon can stay cleaner than the map but should share its hue family. Preserve dense street legibility: strengthen material in large clear areas rather than allowing high-contrast stains to compete with small labels. No animated paper noise, full-map blur or obscuring overlay.
+
+## Visible acceptance — this pass is judged in motion
+
+1. **Opening, no panel:** at the ordinary South Beach view, both Atlantic and bay have several recognizably different engraved groups. In a ten-second recording, their crests visibly advance/develop without touching land. Repeat a short view farther north; the effect must still exist there. A screenshot or changing internal frame counter is not motion evidence.
+2. **Actual drawing entry/exit:** select an illustrated landmark, wait, close it. A viewer must see its architectural illustration gather and return to bare paper at normal speed without a debug control. Capture quarter/half/three-quarter phases plus a full-rate recording. The outgoing fold must not conceal the effect before it becomes legible.
+3. **Material comparison:** same viewport, camera and paused state before/after, panels closed. The center of the paper must show more convincing worn variation, not merely a different average color. Inspect small map labels on the darkest new patch and compare beside private recording 5.77 s. This needs Mick's artistic review; prior director static acceptance is superseded.
+4. **Focused resilience:** close halfway through entry, reopen, rapidly select A→B, then pan/zoom. No stale drawing/title pairing, phantom controls, image rectangles, tile seams or replay of every landmark. Pause/reduced motion shows complete static content and stops water motion.
+5. **Measured budget:** water and image effects use bounded cached surfaces, with no additional geographic tile redraw per animation frame. Reuse the existing navigation check and collect effect frame-cost evidence on the same device. If performance exceeds budget, reduce the number of simultaneous groups/resolution before reducing all motion to near-invisibility. Do not claim speed gains from unequal sessions.
+
+This pass remains local. Implementation and browser evidence belong to Mischief Maintained; Mick's live review decides whether the visual ambition has been met.
